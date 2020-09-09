@@ -1,1 +1,9 @@
 language: java
+addons:
+  sonarcloud:
+    organization: "cfc-kata"
+    token:
+      secure: "j4NktIURheY0saS/qWUFcTBFWRoSQQALuJE0EkcPBE3z4yN4oDL+Ur9+i7Ul7CvmZXp3WzXBkhY7LJg3R8xQGrNolvQJoU76KUBljJkKMDvvOyw5UzQ1wVBJ83yphwcfI3IQmMAZ0mYow4hQ8VAIv1vfvnWEecrY+dQouJzZukc/CNu60pAxqcWjWfTF9giagDqIe39Ifxbs7lkhlAdf4odkutSa89qwljkgtOVLrREhMOOOGqegS5l5Sw+VvsU0JtvSqs1qT1nlXjeply98SXoXmFdKbb9Ji6efgP7D5Kr8IHucL1EYBzpVMRQ92u9Fv1+J+TWJfczBfFz4+7+pscEjwaURJ2913QnT6bIvXn9v6C0yB7QrRD+K8ISPIhkkXBRA42Qa4Kak/AUXg5uICYj5pgUv9GzuG1av6yVVValmh5v0+QegFLxrrYUIqYJngL7hClHOKphz77snTP8mwPJUs4kJAL8G5H6fVOBqfIv/DEMRMx43KlMnyAFgrcSiVnjfV7HMUgw7Br0qAgNdYvRMYsNTVzAWGDnoE3octytR06b6iXewiepy8ssFMwS78sF8r4eYwb1wbOUjNs1DxsMyA/3eiczFtDjxQrTBaqIDsJNn3ecciV33VgxJkoXb3+wnjqiUn6+CMmNEdoqVLwL70hKwaz3wg9Kl0OcfZ68="
+script:
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=cfc-kata_cfc-kata-loan
