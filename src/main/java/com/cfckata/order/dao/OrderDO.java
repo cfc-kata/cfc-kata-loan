@@ -2,7 +2,6 @@ package com.cfckata.order.dao;
 
 import com.cfckata.order.domain.Order;
 import com.cfckata.order.domain.OrderStatus;
-import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;

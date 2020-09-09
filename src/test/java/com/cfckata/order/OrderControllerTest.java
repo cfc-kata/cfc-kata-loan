@@ -1,12 +1,13 @@
 package com.cfckata.order;
 
-import com.cfckata.ApiTest;
-import com.cfckata.order.api.ChangeOrderRequest;
-import com.cfckata.order.api.CheckoutRequest;
-import com.cfckata.order.api.CreateOrderRequest;
-import com.cfckata.order.api.OrderItemRequest;
+import com.cfckata.common.ApiTest;
+import com.cfckata.order.request.ChangeOrderRequest;
+import com.cfckata.order.request.CheckoutRequest;
+import com.cfckata.order.request.CreateOrderRequest;
+import com.cfckata.order.request.OrderItemRequest;
 import com.cfckata.order.domain.Order;
 import com.cfckata.order.domain.OrderStatus;
+import com.cfckata.order.response.OrderResponse;
 import org.assertj.core.data.Offset;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
@@ -27,11 +28,11 @@ public class OrderControllerTest extends ApiTest {
     public void should_query_order() {
         String customerId = "TEST_USER_ID";
         String orderId = "TEST_ORDER";
-        ResponseEntity<Order> responseEntity = this.restTemplate.getForEntity(baseUrl + "/orders/" + orderId, Order.class);
+        ResponseEntity<OrderResponse> responseEntity = this.restTemplate.getForEntity(baseUrl + "/orders/" + orderId, OrderResponse.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        Order order = responseEntity.getBody();
+        OrderResponse order = responseEntity.getBody();
         assertThat(order.getId()).isEqualTo(orderId);
         assertThat(order.getCustomer().getId()).isEqualTo(customerId);
         assertThat(order.getItems()).hasSize(2);
@@ -51,12 +52,12 @@ public class OrderControllerTest extends ApiTest {
         CreateOrderRequest request = new CreateOrderRequest(new Date(), customerId, items);
 
         //When
-        ResponseEntity<Order> responseEntity = this.restTemplate.postForEntity(baseUrl + "/orders", request, Order.class);
+        ResponseEntity<OrderResponse> responseEntity = this.restTemplate.postForEntity(baseUrl + "/orders", request, OrderResponse.class);
 
         //Then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
-        Order order = responseEntity.getBody();
+        OrderResponse order = responseEntity.getBody();
         assertThat(order.getId()).isNotNull();
         assertThat(order.getCustomer().getId()).isEqualTo(customerId);
         assertThat(order.getItems()).hasSize(2);
@@ -80,15 +81,15 @@ public class OrderControllerTest extends ApiTest {
         this.restTemplate.put(baseUrl + "/orders/"+ orderId, request);
 
         //Then
-        ResponseEntity<Order> responseEntity = this.restTemplate.getForEntity(baseUrl + "/orders/" + orderId, Order.class);
+        ResponseEntity<OrderResponse> responseEntity = this.restTemplate.getForEntity(baseUrl + "/orders/" + orderId, OrderResponse.class);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        Order order = responseEntity.getBody();
+        OrderResponse order = responseEntity.getBody();
         assertThat(order.getId()).isEqualTo(orderId);
         assertThat(order.getCustomer().getId()).isEqualTo(newCustomerId);
         assertThat(order.getItems()).hasSize(2);
-        assertThat(order.getItems().get(0).getAmount()).isCloseTo(BigDecimal.ONE, Offset.offset(BigDecimal.ZERO));
-        assertThat(order.getItems().get(1).getAmount()).isCloseTo(BigDecimal.TEN, Offset.offset(BigDecimal.ZERO));
+        assertThat(order.getItems().get(0).getAmount()).isEqualTo("1");
+        assertThat(order.getItems().get(1).getAmount()).isEqualTo("10");
     }
 
     @Test
@@ -110,16 +111,16 @@ public class OrderControllerTest extends ApiTest {
         this.restTemplate.put(baseUrl + "/orders/"+ orderId, request);
 
         //Then
-        ResponseEntity<Order> responseEntity = this.restTemplate.getForEntity(baseUrl + "/orders/" + orderId, Order.class);
+        ResponseEntity<OrderResponse> responseEntity = this.restTemplate.getForEntity(baseUrl + "/orders/" + orderId, OrderResponse.class);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        Order order = responseEntity.getBody();
+        OrderResponse order = responseEntity.getBody();
         assertThat(order.getId()).isEqualTo(orderId);
         assertThat(order.getCustomer().getId()).isEqualTo(newCustomerId);
         assertThat(order.getItems()).hasSize(3);
-        assertThat(order.getItems().get(0).getAmount()).isCloseTo(BigDecimal.ONE, Offset.offset(BigDecimal.ZERO));
-        assertThat(order.getItems().get(1).getAmount()).isCloseTo(BigDecimal.TEN, Offset.offset(BigDecimal.ZERO));
-        assertThat(order.getItems().get(2).getAmount()).isCloseTo(BigDecimal.TEN, Offset.offset(BigDecimal.ZERO));
+        assertThat(order.getItems().get(0).getAmount()).isEqualTo("1");;
+        assertThat(order.getItems().get(1).getAmount()).isEqualTo("10");
+        assertThat(order.getItems().get(2).getAmount()).isEqualTo("10");
     }
 
     @Test
@@ -150,9 +151,9 @@ public class OrderControllerTest extends ApiTest {
         this.restTemplate.postForLocation(baseUrl + "/orders/"+orderId+"/payment", request);
 
         //Then
-        ResponseEntity<Order> responseEntity = this.restTemplate.getForEntity(baseUrl + "/orders/" + orderId, Order.class);
-        assertThat(responseEntity.getBody().getTotalPayment()).isCloseTo(amount, Offset.offset(new BigDecimal("0.0001")));
-        assertThat(responseEntity.getBody().getStatus()).isEqualTo(OrderStatus.PAID);
+        ResponseEntity<OrderResponse> responseEntity = this.restTemplate.getForEntity(baseUrl + "/orders/" + orderId, OrderResponse.class);
+        assertThat(responseEntity.getBody().getTotalPayment()).isEqualTo("CN¥9,000.00");
+        assertThat(responseEntity.getBody().getStatus()).isEqualTo(OrderStatus.PAID.getValue());
     }
 
 }

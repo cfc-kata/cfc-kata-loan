@@ -1,8 +1,5 @@
 package com.cfckata.product;
 
-import lombok.Builder;
-import lombok.Data;
-
 import java.math.BigDecimal;
 
 public class ProductDO {

@@ -1,12 +1,12 @@
 package com.cfckata.order;
 
-import com.github.meixuesong.aggregatepersistence.Aggregate;
-import com.cfckata.order.api.ChangeOrderRequest;
-import com.cfckata.order.api.CheckoutRequest;
-import com.cfckata.order.api.CreateOrderRequest;
 import com.cfckata.order.domain.Order;
 import com.cfckata.order.domain.Payment;
 import com.cfckata.order.domain.PaymentType;
+import com.cfckata.order.request.ChangeOrderRequest;
+import com.cfckata.order.request.CheckoutRequest;
+import com.cfckata.order.request.CreateOrderRequest;
+import com.github.meixuesong.aggregatepersistence.Aggregate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

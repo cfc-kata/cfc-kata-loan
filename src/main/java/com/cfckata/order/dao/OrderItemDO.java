@@ -1,7 +1,6 @@
 package com.cfckata.order.dao;
 
 import com.cfckata.order.domain.OrderItem;
-import lombok.Data;
 
 import java.math.BigDecimal;
 

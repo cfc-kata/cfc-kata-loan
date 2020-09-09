@@ -1,6 +1,4 @@
-package com.cfckata.order.api;
-
-import lombok.Data;
+package com.cfckata.order.request;
 
 import java.math.BigDecimal;
 

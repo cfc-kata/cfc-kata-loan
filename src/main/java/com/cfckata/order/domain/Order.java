@@ -1,8 +1,7 @@
 package com.cfckata.order.domain;
 
-import com.github.meixuesong.aggregatepersistence.Versionable;
 import com.cfckata.customer.Customer;
-import lombok.Data;
+import com.github.meixuesong.aggregatepersistence.Versionable;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;

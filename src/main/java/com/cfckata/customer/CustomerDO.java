@@ -1,8 +1,5 @@
 package com.cfckata.customer;
 
-import lombok.Builder;
-import lombok.Data;
-
 public class CustomerDO {
     private String id;
     private String name;

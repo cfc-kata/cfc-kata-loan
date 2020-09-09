@@ -1,12 +1,12 @@
 package com.cfckata.order;
 
 import com.cfckata.customer.CustomerRepository;
-import com.cfckata.order.api.ChangeOrderRequest;
-import com.cfckata.order.api.CreateOrderRequest;
-import com.cfckata.order.api.OrderItemRequest;
 import com.cfckata.order.domain.Order;
 import com.cfckata.order.domain.OrderItem;
 import com.cfckata.order.domain.OrderStatus;
+import com.cfckata.order.request.ChangeOrderRequest;
+import com.cfckata.order.request.CreateOrderRequest;
+import com.cfckata.order.request.OrderItemRequest;
 import com.cfckata.product.Product;
 import com.cfckata.product.ProductRepository;
 import com.github.meixuesong.aggregatepersistence.Aggregate;

@@ -1,7 +1,6 @@
 package com.cfckata.order.domain;
 
 import com.cfckata.product.Product;
-import lombok.Data;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

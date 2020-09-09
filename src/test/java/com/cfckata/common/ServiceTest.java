@@ -1,4 +1,4 @@
-package com.cfckata;
+package com.cfckata.common;
 
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

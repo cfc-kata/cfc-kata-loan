@@ -1,7 +1,10 @@
-package com.cfckata.order.api;
+package com.cfckata.order;
 
-import com.cfckata.order.OrderService;
 import com.cfckata.order.domain.Order;
+import com.cfckata.order.request.ChangeOrderRequest;
+import com.cfckata.order.request.CheckoutRequest;
+import com.cfckata.order.request.CreateOrderRequest;
+import com.cfckata.order.response.OrderResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,27 +27,27 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public Order findOrder(@PathVariable String id) {
+    public OrderResponse findOrder(@PathVariable String id) {
         Order order = orderService.findById(id);
 
-        return order;
+        return new OrderResponse(order);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Order createOrder(@RequestBody CreateOrderRequest request) {
+    public OrderResponse createOrder(@RequestBody CreateOrderRequest request) {
         Order order = orderService.createOrder(request);
-        return order;
+        return new OrderResponse(order);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Order updateOrder(@PathVariable String id, @RequestBody ChangeOrderRequest request) {
+    public OrderResponse updateOrder(@PathVariable String id, @RequestBody ChangeOrderRequest request) {
         if (id == null || !id.equalsIgnoreCase(request.getOrderId())) {
             throw new IllegalArgumentException("id should equals request.orderId");
         }
         Order order = orderService.updateOrder(request);
-        return order;
+        return new OrderResponse(order);
     }
 
     @DeleteMapping("/{id}")

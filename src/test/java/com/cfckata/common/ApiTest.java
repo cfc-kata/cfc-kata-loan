@@ -1,4 +1,4 @@
-package com.cfckata;
+package com.cfckata.common;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;

@@ -1,8 +1,5 @@
 package com.cfckata.order;
 
-import com.github.meixuesong.aggregatepersistence.Aggregate;
-import com.github.meixuesong.aggregatepersistence.AggregateFactory;
-import com.github.meixuesong.aggregatepersistence.DataObjectUtils;
 import com.cfckata.customer.CustomerRepository;
 import com.cfckata.order.dao.OrderDO;
 import com.cfckata.order.dao.OrderDOMapper;
@@ -12,6 +9,9 @@ import com.cfckata.order.domain.Order;
 import com.cfckata.order.domain.OrderItem;
 import com.cfckata.product.Product;
 import com.cfckata.product.ProductRepository;
+import com.github.meixuesong.aggregatepersistence.Aggregate;
+import com.github.meixuesong.aggregatepersistence.AggregateFactory;
+import com.github.meixuesong.aggregatepersistence.DataObjectUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityNotFoundException;

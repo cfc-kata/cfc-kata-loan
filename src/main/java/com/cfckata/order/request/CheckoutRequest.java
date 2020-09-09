@@ -1,4 +1,4 @@
-package com.cfckata.order.api;
+package com.cfckata.order.request;
 
 import java.math.BigDecimal;
 
