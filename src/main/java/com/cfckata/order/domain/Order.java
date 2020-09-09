@@ -1,6 +1,5 @@
 package com.cfckata.order.domain;
 
-import com.cfckata.customer.Customer;
 import com.github.meixuesong.aggregatepersistence.Versionable;
 
 import java.math.BigDecimal;
@@ -12,7 +11,7 @@ import java.util.List;
 public class Order implements Versionable {
     private String id;
     private Date createTime;
-    private Customer customer;
+    private String customerId;
     private List<OrderItem> items;
     private OrderStatus status;
     private BigDecimal totalPrice = BigDecimal.ZERO;
@@ -70,14 +69,6 @@ public class Order implements Versionable {
         this.createTime = createTime;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
     public OrderStatus getStatus() {
         return status;
     }
@@ -96,6 +87,14 @@ public class Order implements Versionable {
 
     public void setTotalPayment(BigDecimal totalPayment) {
         this.totalPayment = totalPayment;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     @Override

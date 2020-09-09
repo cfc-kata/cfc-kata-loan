@@ -34,7 +34,7 @@ public class OrderControllerTest extends ApiTest {
 
         OrderResponse order = responseEntity.getBody();
         assertThat(order.getId()).isEqualTo(orderId);
-        assertThat(order.getCustomer().getId()).isEqualTo(customerId);
+        assertThat(order.getCustomerId()).isEqualTo(customerId);
         assertThat(order.getItems()).hasSize(2);
     }
 
@@ -59,7 +59,7 @@ public class OrderControllerTest extends ApiTest {
 
         OrderResponse order = responseEntity.getBody();
         assertThat(order.getId()).isNotNull();
-        assertThat(order.getCustomer().getId()).isEqualTo(customerId);
+        assertThat(order.getCustomerId()).isEqualTo(customerId);
         assertThat(order.getItems()).hasSize(2);
     }
 
@@ -86,7 +86,7 @@ public class OrderControllerTest extends ApiTest {
 
         OrderResponse order = responseEntity.getBody();
         assertThat(order.getId()).isEqualTo(orderId);
-        assertThat(order.getCustomer().getId()).isEqualTo(newCustomerId);
+        assertThat(order.getCustomerId()).isEqualTo(newCustomerId);
         assertThat(order.getItems()).hasSize(2);
         assertThat(order.getItems().get(0).getAmount()).isEqualTo("1");
         assertThat(order.getItems().get(1).getAmount()).isEqualTo("10");
@@ -116,7 +116,7 @@ public class OrderControllerTest extends ApiTest {
 
         OrderResponse order = responseEntity.getBody();
         assertThat(order.getId()).isEqualTo(orderId);
-        assertThat(order.getCustomer().getId()).isEqualTo(newCustomerId);
+        assertThat(order.getCustomerId()).isEqualTo(newCustomerId);
         assertThat(order.getItems()).hasSize(3);
         assertThat(order.getItems().get(0).getAmount()).isEqualTo("1");;
         assertThat(order.getItems().get(1).getAmount()).isEqualTo("10");

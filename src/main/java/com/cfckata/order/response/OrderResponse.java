@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class OrderResponse {
     private String id;
     private String createTime;
-    private CustomerResponse customer;
+    private String customerId;
     private List<OrderItemResponse> items;
     private int status;
     private String totalPrice;
@@ -23,7 +23,7 @@ public class OrderResponse {
         id = order.getId();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         createTime = df.format(order.getCreateTime());
-        customer = new CustomerResponse(order.getCustomer());
+        customerId = order.getCustomerId();
         items = order.getItems().stream().map(i -> new OrderItemResponse(i)).collect(Collectors.toList());
         this.status = order.getStatus().getValue();
         this.totalPrice = NumberFormat.getCurrencyInstance().format(order.getTotalPrice());
@@ -36,10 +36,6 @@ public class OrderResponse {
 
     public String getCreateTime() {
         return createTime;
-    }
-
-    public CustomerResponse getCustomer() {
-        return customer;
     }
 
     public List<OrderItemResponse> getItems() {
@@ -66,8 +62,12 @@ public class OrderResponse {
         this.createTime = createTime;
     }
 
-    public void setCustomer(CustomerResponse customer) {
-        this.customer = customer;
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public void setItems(List<OrderItemResponse> items) {

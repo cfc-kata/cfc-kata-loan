@@ -42,7 +42,6 @@ public class OrderRepository {
         }
 
         Order order = orderDO.toOrder();
-        order.setCustomer(customerRepository.findById(orderDO.getCustomerId()));
         order.setItems(getOrderItems(id));
 
         return AggregateFactory.createAggregate(order);

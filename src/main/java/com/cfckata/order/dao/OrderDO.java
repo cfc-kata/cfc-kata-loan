@@ -21,6 +21,7 @@ public class OrderDO {
     public Order toOrder() {
         Order order = new Order();
         order.setId(getId());
+        order.setCustomerId(customerId);
         order.setCreateTime(getCreateTime());
         order.setVersion(getVersion());
         order.setTotalPayment(getTotalPayment());
@@ -32,7 +33,7 @@ public class OrderDO {
     public OrderDO(Order order) {
         setId(order.getId());
         setCreateTime(order.getCreateTime());
-        setCustomerId(order.getCustomer().getId());
+        setCustomerId(order.getCustomerId());
         setStatus(order.getStatus().getValue());
         setTotalPayment(order.getTotalPayment());
         setTotalPrice(order.getTotalPrice());

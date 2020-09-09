@@ -33,11 +33,15 @@ public class OrderFactory {
     }
 
     public Aggregate<Order> createOrder(CreateOrderRequest request) {
+        if (customerRepository.findById(request.getCustomerId()) == null) {
+            throw new IllegalArgumentException("Customer not exists.");
+        }
+
         Order order = new Order();
 
         order.setId(idGenerator.generateId());
         order.setCreateTime(request.getCreateTime());
-        order.setCustomer(customerRepository.findById(request.getCustomerId()));
+        order.setCustomerId(request.getCustomerId());
         order.setItems(getNewOrderItems(request.getItems()));
         order.setVersion(Versionable.NEW_VERSION);
         order.setStatus(OrderStatus.NEW);
@@ -48,8 +52,7 @@ public class OrderFactory {
     public Aggregate<Order> getOrder(ChangeOrderRequest request) {
         Aggregate<Order> aggregate = orderRepository.findById(request.getOrderId());
         Order order = aggregate.getRoot();
-
-        order.setCustomer(customerRepository.findById(request.getCustomerId()));
+        order.setCustomerId(request.getCustomerId());
         order.setItems(getUpdatedOrderItems(order.getItems(), request));
 
         return aggregate;

@@ -84,7 +84,7 @@ public class OrderServiceTest {
         Order order = new Order();
         order.setId(orderid);
         order.setCreateTime(new Date());
-        order.setCustomer(new Customer("customerId", "name"));
+        order.setCustomerId("customerId");
         order.setStatus(OrderStatus.NEW);
         order.setTotalPayment(totalPrice);
         ArrayList<OrderItem> items = new ArrayList<>();

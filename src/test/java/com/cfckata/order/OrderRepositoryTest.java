@@ -39,7 +39,7 @@ public class OrderRepositoryTest extends RepositoryTest {
         Order order = new Order();
         order.setId(orderid);
         order.setCreateTime(new Date());
-        order.setCustomer(new Customer("NEW_TEST_USER_ID", "NEW_TEST_USER_NAME"));
+        order.setCustomerId("NEW_TEST_USER_ID");
         order.setStatus(OrderStatus.NEW);
         order.setTotalPayment(new BigDecimal("18000.00"));
         ArrayList<OrderItem> items = new ArrayList<>();
