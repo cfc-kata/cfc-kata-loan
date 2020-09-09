@@ -1,6 +1,5 @@
 package com.cfckata.order;
 
-import com.cfckata.customer.CustomerRepository;
 import com.cfckata.order.dao.OrderDO;
 import com.cfckata.order.dao.OrderDOMapper;
 import com.cfckata.order.dao.OrderItemDO;
@@ -26,13 +25,11 @@ public class OrderRepository {
     private OrderDOMapper orderMapper;
     private OrderItemDOMapper orderItemMapper;
     private ProductRepository productRepository;
-    private CustomerRepository customerRepository;
 
-    public OrderRepository(OrderDOMapper orderMapper, OrderItemDOMapper orderItemMapper, ProductRepository productRepository, CustomerRepository customerRepository) {
+    public OrderRepository(OrderDOMapper orderMapper, OrderItemDOMapper orderItemMapper, ProductRepository productRepository) {
         this.orderMapper = orderMapper;
         this.orderItemMapper = orderItemMapper;
         this.productRepository = productRepository;
-        this.customerRepository = customerRepository;
     }
 
     public Aggregate<Order> findById(String id) {
@@ -72,8 +69,10 @@ public class OrderRepository {
         Map<String, Product> productMap = productRepository.getProductMapByIds(prodIds);
 
         return itemDOs.stream()
-                .map(itemDO ->
-                        new OrderItem(itemDO.getId(), productMap.get(itemDO.getProdId()), itemDO.getAmount()))
+                .map(itemDO -> {
+                    Product product = productMap.get(itemDO.getProdId());
+                    return new OrderItem(itemDO.getId(), itemDO.getAmount(), product.getPrice(), product.getId(), product.getName());
+                })
                 .collect(Collectors.toList());
     }
 

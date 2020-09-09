@@ -1,6 +1,5 @@
 package com.cfckata.order;
 
-import com.cfckata.customer.Customer;
 import com.cfckata.order.domain.Order;
 import com.cfckata.order.domain.OrderItem;
 import com.cfckata.order.domain.OrderStatus;
@@ -88,10 +87,15 @@ public class OrderServiceTest {
         order.setStatus(OrderStatus.NEW);
         order.setTotalPayment(totalPrice);
         ArrayList<OrderItem> items = new ArrayList<>();
-        items.add(new OrderItem(1L, new Product("product1", "product1", totalPrice), amount));
+        final Product product = new Product("product1", "product1", totalPrice);
+        items.add(new OrderItem(1L, amount, product.getPrice(), product.getId(), product.getName()));
         order.setItems(items);
 
         return order;
     }
 
+    @Test
+    public void name() {
+        assertThat(String.format("product %s not exists", "AA")).isEqualTo("product AA not exists");
+    }
 }

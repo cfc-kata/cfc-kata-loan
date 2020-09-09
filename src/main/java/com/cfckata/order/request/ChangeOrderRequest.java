@@ -8,7 +8,6 @@ public class ChangeOrderRequest {
     private List<OrderItemRequest> items;
 
     public ChangeOrderRequest(String orderId, String customerId, List<OrderItemRequest> items) {
-
         this.orderId = orderId;
         this.customerId = customerId;
         this.items = items;

@@ -14,6 +14,7 @@ import com.github.meixuesong.aggregatepersistence.AggregateFactory;
 import com.github.meixuesong.aggregatepersistence.Versionable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -62,15 +63,23 @@ public class OrderFactory {
         List<String> productIds = request.getItems().stream().map(item -> item.getProductId()).collect(Collectors.toList());
         Map<String, Product> productMap = productRepository.getProductMapByIds(productIds);
 
-        return request.getItems().stream()
-                .map(
-                        item -> new OrderItem(getItemId(items, item.getProductId()), productMap.get(item.getProductId()), item.getAmount()))
-                .collect(Collectors.toList());
+        List<OrderItem> results = new ArrayList<>();
+        for (OrderItemRequest itemRequest : request.getItems()) {
+            Product product = productMap.get(itemRequest.getProductId());
+            Long itemId = getOrderItemId(items, itemRequest.getProductId());
+
+            results.add(new OrderItem(itemId,
+                    itemRequest.getAmount(),
+                    product.getPrice(), product.getId(), product.getName())
+            );
+        }
+
+        return results;
     }
 
-    private Long getItemId(List<OrderItem> items, String productId) {
+    private Long getOrderItemId(List<OrderItem> items, String productId) {
         for (OrderItem item : items) {
-            if (item.getProduct().getId().equalsIgnoreCase(productId)) {
+            if (item.getProductId().equalsIgnoreCase(productId)) {
                 return item.getId();
             }
         }
@@ -83,8 +92,10 @@ public class OrderFactory {
         Map<String, Product> productMap = productRepository.getProductMapByIds(productIds);
 
         return items.stream()
-                    .map(
-                            item -> new OrderItem(null, productMap.get(item.getProductId()), item.getAmount()))
-                    .collect(Collectors.toList());
+                .map(item -> {
+                    Product product = productMap.get(item.getProductId());
+                    return new OrderItem(null, item.getAmount(), product.getPrice(), product.getId(), product.getName());
+                })
+                .collect(Collectors.toList());
     }
 }

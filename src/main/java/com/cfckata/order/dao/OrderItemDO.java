@@ -17,7 +17,7 @@ public class OrderItemDO {
     public OrderItemDO(String orderId, OrderItem item) {
         id = item.getId();
         this.orderId = orderId;
-        this.prodId = item.getProduct().getId();
+        this.prodId = item.getProductId();
         this.amount = item.getAmount();
         this.subTotal = item.getSubTotal();
     }

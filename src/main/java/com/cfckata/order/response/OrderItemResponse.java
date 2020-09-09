@@ -16,8 +16,8 @@ public class OrderItemResponse {
 
     public OrderItemResponse(OrderItem item) {
         this.id = item.getId();
-        this.productId = item.getProduct().getId();
-        this.productName = item.getProduct().getName();
+        this.productId = item.getProductId();
+        this.productName = item.getProductName();
         this.amount = NumberFormat.getNumberInstance().format(item.getAmount());
         this.subTotal = NumberFormat.getCurrencyInstance().format(item.getSubTotal());
     }

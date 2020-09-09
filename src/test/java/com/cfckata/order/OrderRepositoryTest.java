@@ -2,7 +2,6 @@ package com.cfckata.order;
 
 import com.cfckata.common.JsonComparator;
 import com.cfckata.common.RepositoryTest;
-import com.cfckata.customer.Customer;
 import com.cfckata.order.domain.Order;
 import com.cfckata.order.domain.OrderItem;
 import com.cfckata.order.domain.OrderStatus;
@@ -43,8 +42,10 @@ public class OrderRepositoryTest extends RepositoryTest {
         order.setStatus(OrderStatus.NEW);
         order.setTotalPayment(new BigDecimal("18000.00"));
         ArrayList<OrderItem> items = new ArrayList<>();
-        items.add(new OrderItem(100L, new Product("PROD1", "Computer", new BigDecimal("8000.00")), amount));
-        items.add(new OrderItem(200L, new Product("PROD2", "Keyboard", new BigDecimal("1000.00")), amount));
+        final Product product = new Product("PROD1", "Computer", new BigDecimal("8000.00"));
+        items.add(new OrderItem(100L, amount, product.getPrice(), product.getId(), product.getName()));
+        final Product product1 = new Product("PROD2", "Keyboard", new BigDecimal("1000.00"));
+        items.add(new OrderItem(200L, amount, product1.getPrice(), product1.getId(), product1.getName()));
         order.setItems(items);
 
         return order;
