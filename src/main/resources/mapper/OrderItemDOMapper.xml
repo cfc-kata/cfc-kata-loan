@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cfckata.order.dao.OrderItemDOMapper">
-  <resultMap id="BaseResultMap" type="com.cfckata.order.dao.OrderItemDO">
+<mapper namespace="com.cfckata.sample.sales.dao.OrderItemDOMapper">
+  <resultMap id="BaseResultMap" type="com.cfckata.sample.sales.dao.OrderItemDO">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="order_id" jdbcType="VARCHAR" property="orderId" />
     <result column="prod_id" jdbcType="VARCHAR" property="prodId" />
@@ -31,7 +31,7 @@
     delete from order_item
     where order_id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.cfckata.order.dao.OrderItemDO">
+  <insert id="insert" parameterType="com.cfckata.sample.sales.dao.OrderItemDO">
     insert into order_item (id, order_id, prod_id,
       amount, sub_total)
     values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=VARCHAR}, #{prodId,jdbcType=VARCHAR},
@@ -52,7 +52,7 @@
   </insert>
 
 
-  <insert id="insertSelective" parameterType="com.cfckata.order.dao.OrderItemDO">
+  <insert id="insertSelective" parameterType="com.cfckata.sample.sales.dao.OrderItemDO">
     insert into order_item
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -89,7 +89,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cfckata.order.dao.OrderItemDO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.cfckata.sample.sales.dao.OrderItemDO">
     update order_item
     <set>
       <if test="orderId != null">
@@ -107,7 +107,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cfckata.order.dao.OrderItemDO">
+  <update id="updateByPrimaryKey" parameterType="com.cfckata.sample.sales.dao.OrderItemDO">
     update order_item
     set order_id = #{orderId,jdbcType=VARCHAR},
       prod_id = #{prodId,jdbcType=VARCHAR},
