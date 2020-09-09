@@ -152,7 +152,7 @@ public class SalesOrderControllerTest extends ApiTest {
 
         //Then
         ResponseEntity<OrderResponse> responseEntity = this.restTemplate.getForEntity(baseUrl + "/orders/" + orderId, OrderResponse.class);
-        assertThat(responseEntity.getBody().getTotalPayment()).isEqualTo("CN¥9,000.00");
+        assertThat(responseEntity.getBody().getTotalPayment()).isEqualTo("￥9,000.00");
         assertThat(responseEntity.getBody().getStatus()).isEqualTo(OrderStatus.PAID.getValue());
     }
 

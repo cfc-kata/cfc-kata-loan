@@ -3,6 +3,7 @@ package com.cfckata.sample.sales.response;
 import com.cfckata.sample.sales.domain.OrderItem;
 
 import java.text.NumberFormat;
+import java.util.Locale;
 
 public class OrderItemResponse {
     private Long id;
@@ -18,8 +19,8 @@ public class OrderItemResponse {
         this.id = item.getId();
         this.productId = item.getProductId();
         this.productName = item.getProductName();
-        this.amount = NumberFormat.getNumberInstance().format(item.getAmount());
-        this.subTotal = NumberFormat.getCurrencyInstance().format(item.getSubTotal());
+        this.amount = NumberFormat.getNumberInstance(Locale.CHINA).format(item.getAmount());
+        this.subTotal = NumberFormat.getCurrencyInstance(Locale.CHINA).format(item.getSubTotal());
     }
 
     public Long getId() {

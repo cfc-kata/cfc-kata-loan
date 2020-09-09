@@ -5,6 +5,7 @@ import com.cfckata.sample.sales.domain.SalesOrder;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class OrderResponse {
@@ -26,8 +27,8 @@ public class OrderResponse {
         customerId = salesOrder.getCustomerId();
         items = salesOrder.getItems().stream().map(i -> new OrderItemResponse(i)).collect(Collectors.toList());
         this.status = salesOrder.getStatus().getValue();
-        this.totalPrice = NumberFormat.getCurrencyInstance().format(salesOrder.getTotalPrice());
-        this.totalPayment = NumberFormat.getCurrencyInstance().format(salesOrder.getTotalPayment());
+        this.totalPrice = NumberFormat.getCurrencyInstance(Locale.CHINA).format(salesOrder.getTotalPrice());
+        this.totalPayment = NumberFormat.getCurrencyInstance(Locale.CHINA).format(salesOrder.getTotalPayment());
     }
 
     public String getId() {
