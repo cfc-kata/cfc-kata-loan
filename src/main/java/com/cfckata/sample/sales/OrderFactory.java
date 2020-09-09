@@ -60,7 +60,7 @@ public class OrderFactory {
     }
 
     private List<OrderItem> getUpdatedOrderItems(List<OrderItem> items, ChangeOrderRequest request) {
-        List<String> productIds = request.getItems().stream().map(item -> item.getProductId()).collect(Collectors.toList());
+        List<String> productIds = request.getItems().stream().map(OrderItemRequest::getProductId).collect(Collectors.toList());
         Map<String, Product> productMap = productRepository.getProductMapByIds(productIds);
 
         List<OrderItem> results = new ArrayList<>();
@@ -88,7 +88,7 @@ public class OrderFactory {
     }
 
     private List<OrderItem> getNewOrderItems(List<OrderItemRequest> items) {
-        List<String> productIds = items.stream().map(item -> item.getProductId()).collect(Collectors.toList());
+        List<String> productIds = items.stream().map(OrderItemRequest::getProductId).collect(Collectors.toList());
         Map<String, Product> productMap = productRepository.getProductMapByIds(productIds);
 
         return items.stream()

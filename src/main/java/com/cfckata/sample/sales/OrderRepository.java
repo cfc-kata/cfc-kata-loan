@@ -65,7 +65,7 @@ public class OrderRepository {
 
     private List<OrderItem> getOrderItems(String id) {
         List<OrderItemDO> itemDOs = orderItemMapper.selectByOrderId(id);
-        List<String> prodIds = itemDOs.stream().map(i -> i.getProdId()).collect(Collectors.toList());
+        List<String> prodIds = itemDOs.stream().map(OrderItemDO::getProdId).collect(Collectors.toList());
         Map<String, Product> productMap = productRepository.getProductMapByIds(prodIds);
 
         return itemDOs.stream()
@@ -105,8 +105,8 @@ public class OrderRepository {
     }
 
     private void insertOrderItems(Aggregate<SalesOrder> orderAggregate) {
-        Collection<OrderItem> newEntities = orderAggregate.findNewEntities(SalesOrder::getItems, (item) -> item.getId() == null);
-        if (newEntities.size() > 0) {
+        Collection<OrderItem> newEntities = orderAggregate.findNewEntities(SalesOrder::getItems, item -> item.getId() == null);
+        if (! newEntities.isEmpty()) {
             List<OrderItemDO> itemDOs = newEntities.stream().map(item -> new OrderItemDO(orderAggregate.getRoot().getId(), item)).collect(Collectors.toList());
             orderItemMapper.insertAll(itemDOs);
         }
@@ -114,7 +114,7 @@ public class OrderRepository {
 
     private void updateOrderItems(Aggregate<SalesOrder> orderAggregate) {
         Collection<OrderItem> updatedEntities = orderAggregate.findChangedEntities(SalesOrder::getItems, OrderItem::getId);
-        updatedEntities.stream().forEach((item) -> {
+        updatedEntities.stream().forEach(item -> {
             if (orderItemMapper.updateByPrimaryKey(new OrderItemDO(orderAggregate.getRoot().getId(), item)) != 1) {
                 throw new OptimisticLockException(String.format("Update order item (%d) error, it's not found", item.getId()));
             }
@@ -123,7 +123,7 @@ public class OrderRepository {
 
     private void removeOrderItems(Aggregate<SalesOrder> orderAggregate) {
         Collection<OrderItem> removedEntities = orderAggregate.findRemovedEntities(SalesOrder::getItems, OrderItem::getId);
-        removedEntities.stream().forEach((item) -> {
+        removedEntities.stream().forEach(item -> {
             if (orderItemMapper.deleteByPrimaryKey(item.getId()) != 1) {
                 throw new OptimisticLockException(String.format("Delete order item (%d) error, it's not found", item.getId()));
             }

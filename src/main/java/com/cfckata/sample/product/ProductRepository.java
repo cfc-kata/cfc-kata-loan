@@ -22,7 +22,8 @@ public class ProductRepository {
 
     public List<Product> findByIds(List<String> prodIds) {
         return productMapper.queryListByIDs(prodIds).stream()
-                .map(productDO -> productDO.toProduct())
+                .map(ProductDO::toProduct)
+//                .map(productDO -> productDO.toProduct())
                 .collect(Collectors.toList());
     }
 

@@ -34,12 +34,12 @@ public class SalesOrder implements Versionable {
 
     public void setItems(List<OrderItem> items) {
         this.items = items;
-        totalPrice = items.stream().map(item -> item.getSubTotal()).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
+        totalPrice = items.stream().map(OrderItem::getSubTotal).reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
     }
 
     public void discard() {
         if (status != OrderStatus.NEW) {
-            throw new RuntimeException("Only new order can be discard.");
+            throw new SalesOrderStatusException("Only new order can be discard.");
         }
 
         this.status = OrderStatus.DISCARD;
