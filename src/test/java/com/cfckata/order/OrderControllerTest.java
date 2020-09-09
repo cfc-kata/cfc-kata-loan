@@ -1,14 +1,13 @@
 package com.cfckata.order;
 
 import com.cfckata.common.ApiTest;
+import com.cfckata.order.domain.Order;
+import com.cfckata.order.domain.OrderStatus;
 import com.cfckata.order.request.ChangeOrderRequest;
 import com.cfckata.order.request.CheckoutRequest;
 import com.cfckata.order.request.CreateOrderRequest;
 import com.cfckata.order.request.OrderItemRequest;
-import com.cfckata.order.domain.Order;
-import com.cfckata.order.domain.OrderStatus;
 import com.cfckata.order.response.OrderResponse;
-import org.assertj.core.data.Offset;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +27,7 @@ public class OrderControllerTest extends ApiTest {
     public void should_query_order() {
         String customerId = "TEST_USER_ID";
         String orderId = "TEST_ORDER";
+
         ResponseEntity<OrderResponse> responseEntity = this.restTemplate.getForEntity(baseUrl + "/orders/" + orderId, OrderResponse.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);

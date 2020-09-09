@@ -3,6 +3,7 @@ package com.cfckata.order;
 import com.cfckata.order.domain.Order;
 import com.cfckata.order.domain.Payment;
 import com.cfckata.order.domain.PaymentType;
+import com.cfckata.order.proxy.PayProxy;
 import com.cfckata.order.request.ChangeOrderRequest;
 import com.cfckata.order.request.CheckoutRequest;
 import com.cfckata.order.request.CreateOrderRequest;
@@ -14,10 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderService {
     private OrderRepository orderRepository;
     private OrderFactory factory;
+    private PayProxy payProxy;
 
-    public OrderService(OrderRepository orderRepository, OrderFactory factory) {
+    public OrderService(OrderRepository orderRepository, OrderFactory factory, PayProxy payProxy) {
         this.orderRepository = orderRepository;
         this.factory = factory;
+        this.payProxy = payProxy;
     }
 
     public Order findById(String id) {
@@ -61,6 +64,7 @@ public class OrderService {
 
         Payment payment = new Payment(PaymentType.from(request.getPaymentType()), request.getAmount());
         order.checkout(payment);
+        payProxy.pay(orderId, request.getAmount());
 
         orderRepository.save(aggregate);
     }

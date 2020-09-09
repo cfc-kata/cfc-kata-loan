@@ -90,10 +90,6 @@ public class Order implements Versionable {
         return totalPrice;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
     public BigDecimal getTotalPayment() {
         return totalPayment;
     }

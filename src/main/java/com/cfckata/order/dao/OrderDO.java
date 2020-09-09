@@ -24,7 +24,6 @@ public class OrderDO {
         order.setCreateTime(getCreateTime());
         order.setVersion(getVersion());
         order.setTotalPayment(getTotalPayment());
-        order.setTotalPrice(getTotalPrice());
         order.setStatus(OrderStatus.from(getStatus()));
 
         return order;
