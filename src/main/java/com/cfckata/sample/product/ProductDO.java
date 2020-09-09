@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class ProductDO {
     private String id;
     private String name;
-    private BigDecimal price =BigDecimal.ZERO;
+    private BigDecimal price;
 
     public Product toProduct() {
         return new Product(getId(), getName(), getPrice());

@@ -5,9 +5,7 @@ public class CustomerDO {
     private String name;
 
     public Customer toCustomer() {
-        Customer customer = new Customer(id, name);
-
-        return customer;
+        return new Customer(id, name);
     }
 
     public String getId() {

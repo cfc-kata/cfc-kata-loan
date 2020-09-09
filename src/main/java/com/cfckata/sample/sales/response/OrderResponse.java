@@ -25,7 +25,7 @@ public class OrderResponse {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         createTime = df.format(salesOrder.getCreateTime());
         customerId = salesOrder.getCustomerId();
-        items = salesOrder.getItems().stream().map(i -> new OrderItemResponse(i)).collect(Collectors.toList());
+        items = salesOrder.getItems().stream().map(OrderItemResponse::new).collect(Collectors.toList());
         this.status = salesOrder.getStatus().getValue();
         this.totalPrice = NumberFormat.getCurrencyInstance(Locale.CHINA).format(salesOrder.getTotalPrice());
         this.totalPayment = NumberFormat.getCurrencyInstance(Locale.CHINA).format(salesOrder.getTotalPayment());
