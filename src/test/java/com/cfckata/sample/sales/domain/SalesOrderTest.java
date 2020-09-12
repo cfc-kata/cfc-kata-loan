@@ -1,10 +1,12 @@
 package com.cfckata.sample.sales.domain;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SalesOrderTest {
 
@@ -18,12 +20,14 @@ public class SalesOrderTest {
         assertThat(order.getStatus()).isEqualTo(OrderStatus.PAID);
     }
 
-    @Test(expected = OrderPaymentException.class)
+    @Test
     public void should_failed_when_pay_a_not_new_order() {
-        SalesOrder order = new SalesOrder();
-        order.setStatus(OrderStatus.PAID);
+        Exception exception = assertThrows(OrderPaymentException.class, () -> {
+            SalesOrder order = new SalesOrder();
+            order.setStatus(OrderStatus.PAID);
 
-        order.checkout(new Payment(PaymentType.CASH, new BigDecimal("10.00")));
+            order.checkout(new Payment(PaymentType.CASH, new BigDecimal("10.00")));
+        });
     }
 
 

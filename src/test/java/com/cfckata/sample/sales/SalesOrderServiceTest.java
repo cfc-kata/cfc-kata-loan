@@ -1,22 +1,23 @@
 package com.cfckata.sample.sales;
 
-import com.cfckata.sample.sales.domain.SalesOrder;
+import com.cfckata.sample.product.Product;
 import com.cfckata.sample.sales.domain.OrderItem;
 import com.cfckata.sample.sales.domain.OrderStatus;
+import com.cfckata.sample.sales.domain.SalesOrder;
 import com.cfckata.sample.sales.proxy.InsufficientBalanceException;
 import com.cfckata.sample.sales.proxy.PayProxy;
 import com.cfckata.sample.sales.proxy.TimeoutException;
 import com.cfckata.sample.sales.request.CheckoutRequest;
-import com.cfckata.sample.product.Product;
 import com.github.meixuesong.aggregatepersistence.AggregateFactory;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.same;
@@ -34,7 +35,7 @@ public class SalesOrderServiceTest {
     private String orderId;
     private BigDecimal totalPrice;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         orderRepository = mock(OrderRepository.class);
         payProxy = mock(PayProxy.class);
@@ -60,22 +61,26 @@ public class SalesOrderServiceTest {
         assertThat(testOrder.getStatus()).isEqualTo(OrderStatus.PAID);
     }
 
-    @Test(expected = InsufficientBalanceException.class)
+    @Test
     public void should_failed_to_pay_when_balance_insufficient() {
-        when(orderRepository.findById(same(orderId))).thenReturn(AggregateFactory.createAggregate(testOrder));
-        doThrow(new InsufficientBalanceException()).when(payProxy).pay(anyString(), any());
+        assertThrows(InsufficientBalanceException.class, () -> {
+            when(orderRepository.findById(same(orderId))).thenReturn(AggregateFactory.createAggregate(testOrder));
+            doThrow(new InsufficientBalanceException()).when(payProxy).pay(anyString(), any());
 
-        //When
-        service.checkout(orderId, new CheckoutRequest("CASH", totalPrice));
+            //When
+            service.checkout(orderId, new CheckoutRequest("CASH", totalPrice));
+        });
     }
 
-    @Test(expected = TimeoutException.class)
+    @Test
     public void should_failed_to_pay_when_external_pay_server_timeout() {
-        when(orderRepository.findById(same(orderId))).thenReturn(AggregateFactory.createAggregate(testOrder));
-        doThrow(new TimeoutException()).when(payProxy).pay(anyString(), any());
+        assertThrows(TimeoutException.class, () -> {
+            when(orderRepository.findById(same(orderId))).thenReturn(AggregateFactory.createAggregate(testOrder));
+            doThrow(new TimeoutException()).when(payProxy).pay(anyString(), any());
 
-        //When
-        service.checkout(orderId, new CheckoutRequest("CASH", totalPrice));
+            //When
+            service.checkout(orderId, new CheckoutRequest("CASH", totalPrice));
+        });
     }
 
     private SalesOrder createNormalTestOrder(String orderid, BigDecimal totalPrice) {

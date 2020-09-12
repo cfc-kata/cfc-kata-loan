@@ -1,14 +1,14 @@
 package com.cfckata.sample.sales;
 
 import com.cfckata.common.ApiTest;
-import com.cfckata.sample.sales.domain.SalesOrder;
 import com.cfckata.sample.sales.domain.OrderStatus;
+import com.cfckata.sample.sales.domain.SalesOrder;
 import com.cfckata.sample.sales.request.ChangeOrderRequest;
 import com.cfckata.sample.sales.request.CheckoutRequest;
 import com.cfckata.sample.sales.request.CreateOrderRequest;
 import com.cfckata.sample.sales.request.OrderItemRequest;
 import com.cfckata.sample.sales.response.OrderResponse;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
