@@ -36,10 +36,8 @@ public class ContractController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ContractResponse queryContract(@PathVariable String id) {
-        ContractResponse response = new ContractResponse(id,
-                new LoanCustomer("BJ001", "张三", "101010200001012356", "18812345678"),
-                new BigDecimal("9.9"), "DEBX", "2022-05-01", new BigDecimal("9000.00"), "ACTIVE");
+        Contract contract = contractService.findContractById(id);
 
-        return response;
+        return new ContractResponse(contract);
     }
 }

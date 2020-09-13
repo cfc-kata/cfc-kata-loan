@@ -38,4 +38,8 @@ public class ContractService {
 
         return contract;
     }
+
+    public Contract findContractById(String id) {
+        return repository.findById(id).getRoot();
+    }
 }

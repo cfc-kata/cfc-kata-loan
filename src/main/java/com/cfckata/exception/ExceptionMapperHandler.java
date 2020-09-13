@@ -1,4 +1,4 @@
-package com.cfckata.sample.exception;
+package com.cfckata.exception;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -25,5 +25,12 @@ public class ExceptionMapperHandler extends ResponseEntityExceptionHandler {
         logger.error("EntityNotFoundException exception: {}", exception);
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity<String> handleIllegalArgumentException(HttpServletRequest request, IllegalArgumentException exception) {
+        logger.error("IllegalArgumentException exception: {}", exception);
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

@@ -8,6 +8,7 @@ import com.github.meixuesong.aggregatepersistence.AggregateFactory;
 import com.github.meixuesong.aggregatepersistence.DataObjectUtils;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.OptimisticLockException;
 
 @Repository
@@ -45,6 +46,9 @@ public class ContractRepository {
 
     public Aggregate<Contract> findById(String id) {
         ContractDO contractDO = mapper.selectByPrimaryKey(id);
+        if (contractDO == null) {
+            throw new EntityNotFoundException(String.format("Contract(id={}) not found", id));
+        }
 
         return AggregateFactory.createAggregate(contractFactory.createContract(contractDO));
     }
