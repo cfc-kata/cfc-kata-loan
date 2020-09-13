@@ -1,5 +1,6 @@
 package com.cfckata.loan.contract;
 
+import com.cfckata.loan.contract.domain.Contract;
 import com.cfckata.loan.contract.request.CreateContractRequest;
 import com.cfckata.loan.contract.response.ContractResponse;
 import com.cfckata.loan.contract.response.CreateContractResponse;
@@ -18,10 +19,18 @@ import java.math.BigDecimal;
 @RestController
 @RequestMapping("/contracts")
 public class ContractController {
+
+    private ContractService contractService;
+
+    public ContractController(ContractService contractService) {
+        this.contractService = contractService;
+    }
+
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public CreateContractResponse createContract(@RequestBody CreateContractRequest request) {
-        return new CreateContractResponse("001");
+        Contract contract = contractService.createContract(request);
+        return new CreateContractResponse(contract.getId());
     }
 
     @GetMapping("/{id}")

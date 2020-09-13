@@ -28,4 +28,6 @@ public class LoanCustomer {
     public String getMobilePhone() {
         return mobilePhone;
     }
+
+
 }
