@@ -1,14 +1,14 @@
 package com.cfckata.sample.sales;
 
 import com.cfckata.sample.customer.CustomerRepository;
-import com.cfckata.sample.sales.domain.SalesOrder;
+import com.cfckata.sample.product.Product;
+import com.cfckata.sample.product.ProductRepository;
 import com.cfckata.sample.sales.domain.OrderItem;
 import com.cfckata.sample.sales.domain.OrderStatus;
+import com.cfckata.sample.sales.domain.SalesOrder;
 import com.cfckata.sample.sales.request.ChangeOrderRequest;
 import com.cfckata.sample.sales.request.CreateOrderRequest;
 import com.cfckata.sample.sales.request.OrderItemRequest;
-import com.cfckata.sample.product.Product;
-import com.cfckata.sample.product.ProductRepository;
 import com.github.meixuesong.aggregatepersistence.Aggregate;
 import com.github.meixuesong.aggregatepersistence.AggregateFactory;
 import com.github.meixuesong.aggregatepersistence.Versionable;

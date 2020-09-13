@@ -1,8 +1,8 @@
 package com.cfckata.sample.sales;
 
-import com.cfckata.sample.sales.domain.SalesOrder;
 import com.cfckata.sample.sales.domain.Payment;
 import com.cfckata.sample.sales.domain.PaymentType;
+import com.cfckata.sample.sales.domain.SalesOrder;
 import com.cfckata.sample.sales.proxy.PayProxy;
 import com.cfckata.sample.sales.request.ChangeOrderRequest;
 import com.cfckata.sample.sales.request.CheckoutRequest;

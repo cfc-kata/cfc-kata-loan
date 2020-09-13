@@ -1,13 +1,13 @@
 package com.cfckata.sample.sales;
 
+import com.cfckata.sample.product.Product;
+import com.cfckata.sample.product.ProductRepository;
 import com.cfckata.sample.sales.dao.OrderDO;
 import com.cfckata.sample.sales.dao.OrderDOMapper;
 import com.cfckata.sample.sales.dao.OrderItemDO;
 import com.cfckata.sample.sales.dao.OrderItemDOMapper;
-import com.cfckata.sample.sales.domain.SalesOrder;
 import com.cfckata.sample.sales.domain.OrderItem;
-import com.cfckata.sample.product.Product;
-import com.cfckata.sample.product.ProductRepository;
+import com.cfckata.sample.sales.domain.SalesOrder;
 import com.github.meixuesong.aggregatepersistence.Aggregate;
 import com.github.meixuesong.aggregatepersistence.AggregateFactory;
 import com.github.meixuesong.aggregatepersistence.DataObjectUtils;

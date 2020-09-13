@@ -1,7 +1,7 @@
 package com.cfckata.sample.sales.dao;
 
-import com.cfckata.sample.sales.domain.SalesOrder;
 import com.cfckata.sample.sales.domain.OrderStatus;
+import com.cfckata.sample.sales.domain.SalesOrder;
 
 import java.math.BigDecimal;
 import java.util.Date;

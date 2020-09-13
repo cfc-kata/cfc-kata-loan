@@ -2,10 +2,10 @@ package com.cfckata.sample.sales;
 
 import com.cfckata.common.JsonComparator;
 import com.cfckata.common.RepositoryTest;
-import com.cfckata.sample.sales.domain.SalesOrder;
+import com.cfckata.sample.product.Product;
 import com.cfckata.sample.sales.domain.OrderItem;
 import com.cfckata.sample.sales.domain.OrderStatus;
-import com.cfckata.sample.product.Product;
+import com.cfckata.sample.sales.domain.SalesOrder;
 import com.github.meixuesong.aggregatepersistence.Aggregate;
 import com.github.meixuesong.aggregatepersistence.AggregateFactory;
 import org.junit.jupiter.api.Test;

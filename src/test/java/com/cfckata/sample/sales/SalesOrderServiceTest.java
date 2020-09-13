@@ -98,9 +98,4 @@ public class SalesOrderServiceTest {
 
         return salesOrder;
     }
-
-    @Test
-    public void name() {
-        assertThat(String.format("product %s not exists", "AA")).isEqualTo("product AA not exists");
-    }
 }
