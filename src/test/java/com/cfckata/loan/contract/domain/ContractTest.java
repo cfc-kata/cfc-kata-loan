@@ -34,11 +34,11 @@ class ContractTest {
 
     @Test
     void customer_shoud_over_18_years_old() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now();
+        String idNumber = generateIdNumber(now.toLocalDate(), 17);
 
-            String idNumber = generateIdNumber(now.toLocalDate(), 17);
-            Contract contract = new ContractBuilder()
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new ContractBuilder()
                     .setCreatedAt(now)
                     .setCustomer(new LoanCustomer("", "", idNumber, ""))
                     .setMaturityDate(now.toLocalDate().plusYears(1))
@@ -51,10 +51,10 @@ class ContractTest {
 
     @Test
     void maturity_date_should_less_then_2_year() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now();
+        String idNumber = generateIdNumber(now.toLocalDate(), 18);
 
-            String idNumber = generateIdNumber(now.toLocalDate(), 18);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new ContractBuilder()
                     .setCreatedAt(now)
                     .setCustomer(new LoanCustomer("", "", idNumber, ""))

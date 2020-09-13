@@ -1,6 +1,7 @@
 package com.cfckata.loan.contract.domain;
 
 import com.cfckata.loan.customer.LoanCustomer;
+import com.github.meixuesong.aggregatepersistence.Versionable;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ public class ContractBuilder {
     private BigDecimal commitment;
     private LocalDateTime createdAt = LocalDateTime.now();
     private ContractStatus status = ContractStatus.ACTIVE;
+    private int version = Versionable.NEW_VERSION;
 
     public ContractBuilder setId(String id) {
         this.id = id;
@@ -53,6 +55,11 @@ public class ContractBuilder {
         return this;
     }
 
+    public ContractBuilder setVersion(int version) {
+        this.version = version;
+        return this;
+    }
+
     /**
      * replace nano with milliseconds
      * @param localDateTime
@@ -68,7 +75,7 @@ public class ContractBuilder {
     }
 
     public Contract createContract() {
-        Contract contract = new Contract(id, customer, interestRate, repaymentType, maturityDate, commitment, createdAt, status);
+        Contract contract = new Contract(id, customer, interestRate, repaymentType, maturityDate, commitment, createdAt, status, version);
         contract.validate();
         return contract;
     }

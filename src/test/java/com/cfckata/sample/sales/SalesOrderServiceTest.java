@@ -63,10 +63,10 @@ public class SalesOrderServiceTest {
 
     @Test
     public void should_failed_to_pay_when_balance_insufficient() {
-        assertThrows(InsufficientBalanceException.class, () -> {
-            when(orderRepository.findById(same(orderId))).thenReturn(AggregateFactory.createAggregate(testOrder));
-            doThrow(new InsufficientBalanceException()).when(payProxy).pay(anyString(), any());
+        when(orderRepository.findById(same(orderId))).thenReturn(AggregateFactory.createAggregate(testOrder));
+        doThrow(new InsufficientBalanceException()).when(payProxy).pay(anyString(), any());
 
+        assertThrows(InsufficientBalanceException.class, () -> {
             //When
             service.checkout(orderId, new CheckoutRequest("CASH", totalPrice));
         });
@@ -74,10 +74,10 @@ public class SalesOrderServiceTest {
 
     @Test
     public void should_failed_to_pay_when_external_pay_server_timeout() {
-        assertThrows(TimeoutException.class, () -> {
-            when(orderRepository.findById(same(orderId))).thenReturn(AggregateFactory.createAggregate(testOrder));
-            doThrow(new TimeoutException()).when(payProxy).pay(anyString(), any());
+        when(orderRepository.findById(same(orderId))).thenReturn(AggregateFactory.createAggregate(testOrder));
+        doThrow(new TimeoutException()).when(payProxy).pay(anyString(), any());
 
+        assertThrows(TimeoutException.class, () -> {
             //When
             service.checkout(orderId, new CheckoutRequest("CASH", totalPrice));
         });

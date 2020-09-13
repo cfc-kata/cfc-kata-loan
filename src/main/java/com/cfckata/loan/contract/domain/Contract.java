@@ -35,7 +35,7 @@ public class Contract implements Versionable, Serializable {
     public Contract() {
     }
 
-    Contract(String id, LoanCustomer customer, BigDecimal interestRate, RepaymentType repaymentType, LocalDate maturityDate, BigDecimal commitment, LocalDateTime createdAt, ContractStatus status) {
+    Contract(String id, LoanCustomer customer, BigDecimal interestRate, RepaymentType repaymentType, LocalDate maturityDate, BigDecimal commitment, LocalDateTime createdAt, ContractStatus status, int version) {
         this.id = id;
         this.customer = customer;
         this.interestRate = interestRate;
@@ -44,6 +44,7 @@ public class Contract implements Versionable, Serializable {
         this.commitment = commitment;
         this.createdAt = createdAt;
         this.status = status;
+        this.version = version;
     }
 
     public String getId() {
@@ -76,6 +77,17 @@ public class Contract implements Versionable, Serializable {
 
     public ContractStatus getStatus() {
         return status;
+    }
+
+    public void setCommitment(BigDecimal commitment) {
+        BigDecimal old = this.commitment;
+        this.commitment = commitment;
+        try {
+            validateCommitment();
+        } catch (Exception e) {
+            this.commitment = old;
+            throw e;
+        }
     }
 
     public void validate() {
@@ -138,7 +150,7 @@ public class Contract implements Versionable, Serializable {
 
     @Override
     public int getVersion() {
-        return 0;
+        return version;
     }
 
     public void setVersion(int version) {
@@ -153,15 +165,13 @@ public class Contract implements Versionable, Serializable {
         public CommitmentRange(int ageFrom, int ageTo, int maxCommitment) {
             this.ageFrom = ageFrom;
             this.ageTo = ageTo;
-            this.maxCommitment = new BigDecimal(maxCommitment * 10000.00);
+            this.maxCommitment = BigDecimal.valueOf(maxCommitment * 10000.00);
         }
 
         public void validateAgeCommitment(int age, BigDecimal commitment) {
-            if (age >= ageFrom && age <= ageTo) {
-                if (commitment.compareTo(maxCommitment) > 0) {
-                    throw new IllegalArgumentException(
-                            String.format("The customer is {} years old, and his/her commitment should less than {}", age, maxCommitment));
-                }
+            if (age >= ageFrom && age <= ageTo && commitment.compareTo(maxCommitment) > 0) {
+                throw new IllegalArgumentException(
+                        String.format("The customer is %d years old, and his/her commitment should less than %s", age, maxCommitment));
             }
         }
     }

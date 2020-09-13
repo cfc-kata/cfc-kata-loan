@@ -42,6 +42,7 @@ public class ContractFactory {
                 .setRepaymentType(RepaymentType.valueOf(contractDO.getRepaymentType()))
                 .setCustomer(new LoanCustomer(contractDO.getCustomerId(), contractDO.getCustomerName(), contractDO.getCustomerIdNumber(), contractDO.getCustomerPhone()))
                 .setCreatedAt(contractDO.getCreateTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+                .setVersion(contractDO.getVersion())
                 .createContract();
     }
 

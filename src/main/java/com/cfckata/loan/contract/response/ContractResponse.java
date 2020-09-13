@@ -39,7 +39,27 @@ public class ContractResponse {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public LoanCustomer getLoanCustomer() {
+        return loanCustomer;
+    }
+
+    public BigDecimal getInterestRate() {
+        return interestRate;
+    }
+
+    public String getRepaymentType() {
+        return repaymentType;
+    }
+
+    public String getMaturityDate() {
+        return maturityDate;
+    }
+
+    public BigDecimal getCommitment() {
+        return commitment;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

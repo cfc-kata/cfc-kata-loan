@@ -22,10 +22,10 @@ public class SalesOrderTest {
 
     @Test
     public void should_failed_when_pay_a_not_new_order() {
-        Exception exception = assertThrows(OrderPaymentException.class, () -> {
-            SalesOrder order = new SalesOrder();
-            order.setStatus(OrderStatus.PAID);
+        SalesOrder order = new SalesOrder();
+        order.setStatus(OrderStatus.PAID);
 
+        assertThrows(OrderPaymentException.class, () -> {
             order.checkout(new Payment(PaymentType.CASH, new BigDecimal("10.00")));
         });
     }

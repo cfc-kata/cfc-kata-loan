@@ -47,7 +47,7 @@ public class ContractRepository {
     public Aggregate<Contract> findById(String id) {
         ContractDO contractDO = mapper.selectByPrimaryKey(id);
         if (contractDO == null) {
-            throw new EntityNotFoundException(String.format("Contract(id={}) not found", id));
+            throw new EntityNotFoundException(String.format("Contract(id=%s) not found", id));
         }
 
         return AggregateFactory.createAggregate(contractFactory.createContract(contractDO));
