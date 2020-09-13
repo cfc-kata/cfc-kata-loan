@@ -3,6 +3,7 @@ package com.cfckata.loan.contract.domain;
 import com.cfckata.loan.customer.LoanCustomer;
 import com.github.meixuesong.aggregatepersistence.Versionable;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
-public class Contract implements Versionable {
+public class Contract implements Versionable, Serializable {
     private String id;
     private LoanCustomer customer;
     private BigDecimal interestRate;
@@ -30,6 +31,9 @@ public class Contract implements Versionable {
             new CommitmentRange(61, 70, 1),
             new CommitmentRange(71, 20000, 0)
     );
+
+    public Contract() {
+    }
 
     Contract(String id, LoanCustomer customer, BigDecimal interestRate, RepaymentType repaymentType, LocalDate maturityDate, BigDecimal commitment, LocalDateTime createdAt, ContractStatus status) {
         this.id = id;

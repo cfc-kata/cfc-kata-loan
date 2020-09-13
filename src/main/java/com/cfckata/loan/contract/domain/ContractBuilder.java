@@ -47,8 +47,19 @@ public class ContractBuilder {
     }
 
     public ContractBuilder setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+        //DB only support milliseconds
+        LocalDateTime time = keepMilliseconds(createdAt);
+        this.createdAt = time;
         return this;
+    }
+
+    /**
+     * replace nano with milliseconds
+     * @param localDateTime
+     * @return
+     */
+    private LocalDateTime keepMilliseconds(LocalDateTime localDateTime) {
+        return localDateTime.withNano((localDateTime.getNano() / (1000 * 1000)) * 1000 * 1000);
     }
 
     public ContractBuilder setStatus(ContractStatus status) {

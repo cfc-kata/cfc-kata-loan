@@ -1,9 +1,10 @@
 package com.cfckata.sample.sales.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class OrderItem {
+public class OrderItem implements Serializable {
     private Long id;
     private String productId;
     private String productName;

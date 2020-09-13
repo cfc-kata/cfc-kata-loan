@@ -1,8 +1,9 @@
 package com.cfckata.sample.sales.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Payment {
+public class Payment implements Serializable {
     private PaymentType type;
     private BigDecimal amount;
 

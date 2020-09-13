@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cfckata.loan.contract.dao.ContractDOMapper">
+  <resultMap id="BaseResultMap" type="com.cfckata.loan.contract.dao.ContractDO">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="customer_id" jdbcType="VARCHAR" property="customerId" />
+    <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+    <result column="customer_id_number" jdbcType="VARCHAR" property="customerIdNumber" />
+    <result column="customer_phone" jdbcType="VARCHAR" property="customerPhone" />
+    <result column="interest_rate" jdbcType="DECIMAL" property="interestRate" />
+    <result column="commitment" jdbcType="DECIMAL" property="commitment" />
+    <result column="repayment_type" jdbcType="VARCHAR" property="repaymentType" />
+    <result column="maturity_date" jdbcType="TIMESTAMP" property="maturityDate" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, customer_id, customer_name, customer_id_number, customer_phone,
+    interest_rate, commitment, repayment_type, maturity_date, status, version
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from contract
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from contract
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cfckata.loan.contract.dao.ContractDO">
+    insert into contract (id, create_time, customer_id,
+      customer_name, customer_id_number, customer_phone,
+      interest_rate, commitment, repayment_type,
+      maturity_date, status, version
+      )
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{customerId,jdbcType=VARCHAR},
+      #{customerName,jdbcType=VARCHAR}, #{customerIdNumber,jdbcType=VARCHAR}, #{customerPhone,jdbcType=VARCHAR},
+      #{interestRate,jdbcType=DECIMAL}, #{commitment,jdbcType=DECIMAL}, #{repaymentType,jdbcType=VARCHAR},
+      #{maturityDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cfckata.loan.contract.dao.ContractDO">
+    insert into contract
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="customerId != null">
+        customer_id,
+      </if>
+      <if test="customerName != null">
+        customer_name,
+      </if>
+      <if test="customerIdNumber != null">
+        customer_id_number,
+      </if>
+      <if test="customerPhone != null">
+        customer_phone,
+      </if>
+      <if test="interestRate != null">
+        interest_rate,
+      </if>
+      <if test="commitment != null">
+        commitment,
+      </if>
+      <if test="repaymentType != null">
+        repayment_type,
+      </if>
+      <if test="maturityDate != null">
+        maturity_date,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerId != null">
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null">
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerIdNumber != null">
+        #{customerIdNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPhone != null">
+        #{customerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="interestRate != null">
+        #{interestRate,jdbcType=DECIMAL},
+      </if>
+      <if test="commitment != null">
+        #{commitment,jdbcType=DECIMAL},
+      </if>
+      <if test="repaymentType != null">
+        #{repaymentType,jdbcType=VARCHAR},
+      </if>
+      <if test="maturityDate != null">
+        #{maturityDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cfckata.loan.contract.dao.ContractDO">
+    update contract
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerId != null">
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null">
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerIdNumber != null">
+        customer_id_number = #{customerIdNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPhone != null">
+        customer_phone = #{customerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="interestRate != null">
+        interest_rate = #{interestRate,jdbcType=DECIMAL},
+      </if>
+      <if test="commitment != null">
+        commitment = #{commitment,jdbcType=DECIMAL},
+      </if>
+      <if test="repaymentType != null">
+        repayment_type = #{repaymentType,jdbcType=VARCHAR},
+      </if>
+      <if test="maturityDate != null">
+        maturity_date = #{maturityDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cfckata.loan.contract.dao.ContractDO">
+    update contract
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      customer_id = #{customerId,jdbcType=VARCHAR},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      customer_id_number = #{customerIdNumber,jdbcType=VARCHAR},
+      customer_phone = #{customerPhone,jdbcType=VARCHAR},
+      interest_rate = #{interestRate,jdbcType=DECIMAL},
+      commitment = #{commitment,jdbcType=DECIMAL},
+      repayment_type = #{repaymentType,jdbcType=VARCHAR},
+      maturity_date = #{maturityDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

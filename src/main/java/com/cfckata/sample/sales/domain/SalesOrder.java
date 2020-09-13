@@ -2,13 +2,14 @@ package com.cfckata.sample.sales.domain;
 
 import com.github.meixuesong.aggregatepersistence.Versionable;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class SalesOrder implements Versionable {
+public class SalesOrder implements Versionable, Serializable {
     private String id;
     private Date createTime;
     private String customerId;

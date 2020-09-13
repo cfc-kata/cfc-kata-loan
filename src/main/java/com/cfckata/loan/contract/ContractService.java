@@ -5,6 +5,7 @@ import com.cfckata.loan.contract.domain.ContractBuilder;
 import com.cfckata.loan.contract.domain.ContractStatus;
 import com.cfckata.loan.contract.domain.RepaymentType;
 import com.cfckata.loan.contract.request.CreateContractRequest;
+import com.github.meixuesong.aggregatepersistence.AggregateFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,9 +15,11 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class ContractService {
     private ContractIdGenerator idGenerator;
+    private ContractRepository repository;
 
-    public ContractService(ContractIdGenerator idGenerator) {
+    public ContractService(ContractIdGenerator idGenerator, ContractRepository repository) {
         this.idGenerator = idGenerator;
+        this.repository = repository;
     }
 
     public Contract createContract(CreateContractRequest request) {
@@ -30,6 +33,8 @@ public class ContractService {
                 .setRepaymentType(RepaymentType.valueOf(request.getRepaymentType()))
                 .setStatus(ContractStatus.ACTIVE)
                 .createContract();
+
+        repository.save(AggregateFactory.createAggregate(contract));
 
         return contract;
     }

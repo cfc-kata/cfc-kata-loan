@@ -1,6 +1,8 @@
 package com.cfckata.loan.customer;
 
-public class LoanCustomer {
+import java.io.Serializable;
+
+public class LoanCustomer implements Serializable {
     private final String id;
     private final String name;
     private final String idNumber;
