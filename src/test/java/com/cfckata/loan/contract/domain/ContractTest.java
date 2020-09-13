@@ -37,13 +37,14 @@ class ContractTest {
         LocalDateTime now = LocalDateTime.now();
         String idNumber = generateIdNumber(now.toLocalDate(), 17);
 
+        ContractBuilder contractBuilder = new ContractBuilder()
+                .setCreatedAt(now)
+                .setCustomer(new LoanCustomer("", "", idNumber, ""))
+                .setMaturityDate(now.toLocalDate().plusYears(1))
+                .setCommitment(BigDecimal.TEN);
+
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new ContractBuilder()
-                    .setCreatedAt(now)
-                    .setCustomer(new LoanCustomer("", "", idNumber, ""))
-                    .setMaturityDate(now.toLocalDate().plusYears(1))
-                    .setCommitment(BigDecimal.TEN)
-                    .createContract();
+            contractBuilder.createContract();
         });
 
         assertThat(exception.getMessage()).contains("18 years");
@@ -54,15 +55,15 @@ class ContractTest {
         LocalDateTime now = LocalDateTime.now();
         String idNumber = generateIdNumber(now.toLocalDate(), 18);
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new ContractBuilder()
-                    .setCreatedAt(now)
-                    .setCustomer(new LoanCustomer("", "", idNumber, ""))
-                    .setInterestRate(BigDecimal.TEN)
-                    .setMaturityDate(now.plusYears(3).toLocalDate())
-                    .setCommitment(BigDecimal.valueOf(1000.00))
-                    .createContract();
+        ContractBuilder contractBuilder = new ContractBuilder()
+                .setCreatedAt(now)
+                .setCustomer(new LoanCustomer("", "", idNumber, ""))
+                .setInterestRate(BigDecimal.TEN)
+                .setMaturityDate(now.plusYears(3).toLocalDate())
+                .setCommitment(BigDecimal.valueOf(1000.00));
 
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+                    contractBuilder.createContract();
         });
 
         assertThat(exception.getMessage()).contains("Maturity date");

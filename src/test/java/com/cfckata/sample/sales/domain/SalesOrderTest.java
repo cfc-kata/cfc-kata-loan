@@ -24,9 +24,10 @@ public class SalesOrderTest {
     public void should_failed_when_pay_a_not_new_order() {
         SalesOrder order = new SalesOrder();
         order.setStatus(OrderStatus.PAID);
+        Payment payment = new Payment(PaymentType.CASH, new BigDecimal("10.00"));
 
         assertThrows(OrderPaymentException.class, () -> {
-            order.checkout(new Payment(PaymentType.CASH, new BigDecimal("10.00")));
+            order.checkout(payment);
         });
     }
 

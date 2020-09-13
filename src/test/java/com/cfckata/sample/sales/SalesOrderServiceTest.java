@@ -66,9 +66,11 @@ public class SalesOrderServiceTest {
         when(orderRepository.findById(same(orderId))).thenReturn(AggregateFactory.createAggregate(testOrder));
         doThrow(new InsufficientBalanceException()).when(payProxy).pay(anyString(), any());
 
+        CheckoutRequest request = new CheckoutRequest("CASH", totalPrice);
+
         assertThrows(InsufficientBalanceException.class, () -> {
             //When
-            service.checkout(orderId, new CheckoutRequest("CASH", totalPrice));
+            service.checkout(orderId, request);
         });
     }
 
@@ -77,9 +79,10 @@ public class SalesOrderServiceTest {
         when(orderRepository.findById(same(orderId))).thenReturn(AggregateFactory.createAggregate(testOrder));
         doThrow(new TimeoutException()).when(payProxy).pay(anyString(), any());
 
+        CheckoutRequest request = new CheckoutRequest("CASH", totalPrice);
+
         assertThrows(TimeoutException.class, () -> {
-            //When
-            service.checkout(orderId, new CheckoutRequest("CASH", totalPrice));
+            service.checkout(orderId, request);
         });
     }
 
