@@ -32,9 +32,6 @@ public class Contract implements Versionable, Serializable {
             new CommitmentRange(71, 20000, 0)
     );
 
-    public Contract() {
-    }
-
     Contract(String id, LoanCustomer customer, BigDecimal interestRate, RepaymentType repaymentType, LocalDate maturityDate, BigDecimal commitment, LocalDateTime createdAt, ContractStatus status, int version) {
         this.id = id;
         this.customer = customer;

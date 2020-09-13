@@ -9,7 +9,6 @@ import com.cfckata.loan.contract.domain.RepaymentType;
 import com.cfckata.loan.customer.LoanCustomer;
 import com.github.meixuesong.aggregatepersistence.Aggregate;
 import com.github.meixuesong.aggregatepersistence.AggregateFactory;
-import com.github.meixuesong.aggregatepersistence.DataObjectUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
@@ -20,7 +19,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ContractRepositoryTest extends RepositoryTest {
     @Autowired
@@ -39,14 +37,14 @@ class ContractRepositoryTest extends RepositoryTest {
                 .setRepaymentType(RepaymentType.DEBJ)
                 .setStatus(ContractStatus.ACTIVE)
                 .setMaturityDate(now.plusYears(1).toLocalDate())
-                .setCommitment(new BigDecimal("1000.00"))
+                .setCommitment(new BigDecimal("1000"))
                 .createContract();
 
         repository.save(AggregateFactory.createAggregate(contract));
         Aggregate<Contract> aggregate = repository.findById(contract.getId());
 
-        contract.setVersion(contract.getVersion() + 1);
-        JsonComparator.assertEqualsObjects(contract, aggregate.getRoot());
+        JsonComparator.assertEqualsObjects(contract, aggregate.getRoot(),
+                new JsonComparator.IgnoreFieldSettings().addField(Contract.class, "version").getClassIgnoreFieldNames());
     }
 
     @Test
