@@ -4,18 +4,21 @@ import com.cfckata.loan.contract.domain.RepaymentType;
 import com.github.meixuesong.aggregatepersistence.Versionable;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoanBuilder {
     private String id;
+    private LocalDateTime createdAt;
     private String contractId;
     private BigDecimal applyAmount;
     private int totalMonth;
     private BigDecimal interestRate;
     private String withdrawBankAccount;
-    private String repaymentBank;
+    private String repaymentBankAccount;
     private RepaymentType repaymentType;
-    private List<RepaymentPlan> repaymentPlans;
+    private List<RepaymentPlan> repaymentPlans = new ArrayList<>();
     private int version = Versionable.NEW_VERSION;
 
     public LoanBuilder setId(String id) {
@@ -48,8 +51,8 @@ public class LoanBuilder {
         return this;
     }
 
-    public LoanBuilder setRepaymentBank(String repaymentBank) {
-        this.repaymentBank = repaymentBank;
+    public LoanBuilder setRepaymentBankAccount(String repaymentBankAccount) {
+        this.repaymentBankAccount = repaymentBankAccount;
         return this;
     }
 
@@ -68,9 +71,20 @@ public class LoanBuilder {
         return this;
     }
 
+    public LoanBuilder setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+        return this;
+    }
+
     public Loan createLoan() {
-        Loan loan = new Loan(id, contractId, applyAmount, totalMonth, interestRate, withdrawBankAccount,
-                repaymentBank, repaymentType, repaymentPlans, version);
+        Loan loan = new Loan(id, createdAt, contractId, applyAmount, totalMonth, interestRate, withdrawBankAccount,
+                repaymentBankAccount, repaymentType, repaymentPlans, version);
+
+        loan.validate();
+
+        if (repaymentPlans.size() == 0) {
+            loan.calculateRepaymentPlan();
+        }
 
         return loan;
     }

@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class RepaymentPlan implements Serializable {
-    private String id;
     private Integer no;
     private LocalDate payableDate;
     private BigDecimal payableAmount;
@@ -13,19 +12,14 @@ public class RepaymentPlan implements Serializable {
     private BigDecimal payableCapital;
     private RepaymentPlanStatus status;
 
-    public RepaymentPlan(String id, Integer no, LocalDate payableDate, BigDecimal payableAmount,
+    public RepaymentPlan(Integer no, LocalDate payableDate, BigDecimal payableAmount,
                          BigDecimal payableInterest, BigDecimal payableCapital, RepaymentPlanStatus status) {
-        this.id = id;
         this.no = no;
         this.payableDate = payableDate;
         this.payableAmount = payableAmount;
         this.payableInterest = payableInterest;
         this.payableCapital = payableCapital;
         this.status = status;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public Integer getNo() {

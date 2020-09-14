@@ -7,6 +7,7 @@ import com.cfckata.loan.loan.request.CreateLoanRequest;
 import com.github.meixuesong.aggregatepersistence.Versionable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Service
@@ -23,12 +24,13 @@ public class LoanFactory {
                 .setContractId(request.getContractId())
                 .setApplyAmount(request.getApplyAmount())
                 .setInterestRate(request.getInterestRate())
-                .setRepaymentBank(request.getRepaymentBankAccount())
+                .setRepaymentBankAccount(request.getRepaymentBankAccount())
                 .setRepaymentType(RepaymentType.valueOf(request.getRepaymentType()))
                 .setTotalMonth(request.getTotalMonth())
                 .setVersion(Versionable.NEW_VERSION)
                 .setWithdrawBankAccount(request.getWithdrawBankAccount())
                 .setRepaymentPlans(new ArrayList<>())
+                .setCreatedAt(LocalDateTime.now())
                 .createLoan();
     }
 }
