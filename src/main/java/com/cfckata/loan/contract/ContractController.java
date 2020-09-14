@@ -26,7 +26,7 @@ public class ContractController {
         this.contractService = contractService;
     }
 
-    @PostMapping("/")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CreateContractResponse createContract(@RequestBody CreateContractRequest request) {
         Contract contract = contractService.createContract(request);
