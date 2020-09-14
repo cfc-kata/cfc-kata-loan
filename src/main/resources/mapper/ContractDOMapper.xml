@@ -29,6 +29,10 @@
     delete from contract
     where id = #{id,jdbcType=VARCHAR} and version = #{version,jdbcType=INTEGER}
   </delete>
+  <delete id="delete" parameterType="com.cfckata.loan.contract.dao.ContractDO">
+    delete from contract
+    where id = #{id,jdbcType=VARCHAR} and version = #{version,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.cfckata.loan.contract.dao.ContractDO">
     insert into contract (id, create_time, customer_id,
       customer_name, customer_id_number, customer_phone,

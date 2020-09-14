@@ -17,4 +17,6 @@ public interface ContractDOMapper {
     int updateByPrimaryKeySelective(ContractDO record);
 
     int updateByPrimaryKey(ContractDO record);
+
+    int delete(ContractDO contractDO);
 }

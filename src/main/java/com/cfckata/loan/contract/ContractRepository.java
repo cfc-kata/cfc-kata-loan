@@ -52,4 +52,11 @@ public class ContractRepository {
 
         return AggregateFactory.createAggregate(contractFactory.createContract(contractDO));
     }
+
+    public void remove(Aggregate<Contract> aggregate) {
+        Contract contract = aggregate.getRoot();
+        if (mapper.delete(contractFactory.createContractDO(contract)) != 1) {
+            throw new OptimisticLockException(String.format("Delete contract (%s) error, it's not found or changed by another user", contract.getId()));
+        }
+    }
 }
