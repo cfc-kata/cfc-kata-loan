@@ -5,7 +5,7 @@ import com.cfckata.loan.customer.LoanCustomer;
 import java.math.BigDecimal;
 
 public class CreateContractRequest {
-    private LoanCustomer loanCustomer;
+    private LoanCustomer customer;
     private BigDecimal interestRate;
     private String repaymentType;
     private String maturityDate;
@@ -14,8 +14,8 @@ public class CreateContractRequest {
     public CreateContractRequest() {
     }
 
-    public CreateContractRequest(LoanCustomer loanCustomer, BigDecimal interestRate, String repaymentType, String maturityDate, BigDecimal commitment) {
-        this.loanCustomer = loanCustomer;
+    public CreateContractRequest(LoanCustomer customer, BigDecimal interestRate, String repaymentType, String maturityDate, BigDecimal commitment) {
+        this.customer = customer;
         this.interestRate = interestRate;
         this.repaymentType = repaymentType;
         this.maturityDate = maturityDate;
@@ -38,12 +38,12 @@ public class CreateContractRequest {
         return commitment;
     }
 
-    public LoanCustomer getLoanCustomer() {
-        return loanCustomer;
+    public LoanCustomer getCustomer() {
+        return customer;
     }
 
-    public void setLoanCustomer(LoanCustomer loanCustomer) {
-        this.loanCustomer = loanCustomer;
+    public void setCustomer(LoanCustomer customer) {
+        this.customer = customer;
     }
 
     public void setInterestRate(BigDecimal interestRate) {

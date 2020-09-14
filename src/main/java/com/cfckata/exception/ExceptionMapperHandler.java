@@ -17,20 +17,20 @@ public class ExceptionMapperHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> exceptionHandler(Exception exception) {
         logger.error("ResponseException exception: {}", exception);
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler({EntityNotFoundException.class})
     public ResponseEntity<String> handleSizeExceededException(HttpServletRequest request, EntityNotFoundException exception) {
         logger.error("EntityNotFoundException exception: {}", exception);
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({IllegalArgumentException.class})
     public ResponseEntity<String> handleIllegalArgumentException(HttpServletRequest request, IllegalArgumentException exception) {
         logger.error("IllegalArgumentException exception: {}", exception);
 
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

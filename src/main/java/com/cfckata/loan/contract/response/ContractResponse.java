@@ -8,16 +8,16 @@ import java.time.format.DateTimeFormatter;
 
 public class ContractResponse {
     private String id;
-    private LoanCustomer loanCustomer;
+    private LoanCustomer customer;
     private BigDecimal interestRate;
     private String repaymentType;
     private String maturityDate;
     private BigDecimal commitment;
     private String status;
 
-    public ContractResponse(String id, LoanCustomer loanCustomer, BigDecimal interestRate, String repaymentType, String maturityDate, BigDecimal commitment, String status) {
+    public ContractResponse(String id, LoanCustomer customer, BigDecimal interestRate, String repaymentType, String maturityDate, BigDecimal commitment, String status) {
         this.id = id;
-        this.loanCustomer = loanCustomer;
+        this.customer = customer;
         this.interestRate = interestRate;
         this.repaymentType = repaymentType;
         this.maturityDate = maturityDate;
@@ -27,7 +27,7 @@ public class ContractResponse {
 
     public ContractResponse(Contract contract) {
         this.id = contract.getId();
-        this.loanCustomer = contract.getCustomer();
+        this.customer = contract.getCustomer();
         this.interestRate = contract.getInterestRate();
         this.repaymentType = contract.getRepaymentType().name();
         this.maturityDate = contract.getMaturityDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -39,8 +39,8 @@ public class ContractResponse {
         return id;
     }
 
-    public LoanCustomer getLoanCustomer() {
-        return loanCustomer;
+    public LoanCustomer getCustomer() {
+        return customer;
     }
 
     public BigDecimal getInterestRate() {

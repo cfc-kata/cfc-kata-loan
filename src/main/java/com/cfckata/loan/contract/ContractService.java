@@ -27,7 +27,7 @@ public class ContractService {
                 .setId(idGenerator.generateId())
                 .setCommitment(request.getCommitment())
                 .setCreatedAt(LocalDateTime.now())
-                .setCustomer(request.getLoanCustomer())
+                .setCustomer(request.getCustomer())
                 .setInterestRate(request.getInterestRate())
                 .setMaturityDate(LocalDate.parse(request.getMaturityDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .setRepaymentType(RepaymentType.valueOf(request.getRepaymentType()))
