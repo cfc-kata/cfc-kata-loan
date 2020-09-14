@@ -10,7 +10,7 @@ public class LoanResponse {
     private int totalMonth;
     private BigDecimal interestRate;
     private String withdrawBankAccount;
-    private String repaymentBank;
+    private String repaymentBankAccount;
     private String repaymentType;
     private List<RepaymentPlanResponse> repaymentPlans;
 
@@ -18,7 +18,7 @@ public class LoanResponse {
     }
 
     public LoanResponse(String loanId, String contractId, BigDecimal applyAmount, int totalMonth,
-                        BigDecimal interestRate, String withdrawBankAccount, String repaymentBank,
+                        BigDecimal interestRate, String withdrawBankAccount, String repaymentBankAccount,
                         String repaymentType, List<RepaymentPlanResponse> repaymentPlans) {
         this.loanId = loanId;
         this.contractId = contractId;
@@ -26,7 +26,7 @@ public class LoanResponse {
         this.totalMonth = totalMonth;
         this.interestRate = interestRate;
         this.withdrawBankAccount = withdrawBankAccount;
-        this.repaymentBank = repaymentBank;
+        this.repaymentBankAccount = repaymentBankAccount;
         this.repaymentType = repaymentType;
         this.repaymentPlans = repaymentPlans;
     }
@@ -79,12 +79,12 @@ public class LoanResponse {
         this.withdrawBankAccount = withdrawBankAccount;
     }
 
-    public String getRepaymentBank() {
-        return repaymentBank;
+    public String getRepaymentBankAccount() {
+        return repaymentBankAccount;
     }
 
-    public void setRepaymentBank(String repaymentBank) {
-        this.repaymentBank = repaymentBank;
+    public void setRepaymentBankAccount(String repaymentBankAccount) {
+        this.repaymentBankAccount = repaymentBankAccount;
     }
 
     public String getRepaymentType() {

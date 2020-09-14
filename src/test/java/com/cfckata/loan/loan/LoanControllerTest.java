@@ -7,7 +7,6 @@ import com.cfckata.loan.loan.response.LoanResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
 

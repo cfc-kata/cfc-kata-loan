@@ -1,6 +1,7 @@
 package com.cfckata.sample.sales;
 
 import com.cfckata.common.ApiTest;
+import com.cfckata.exception.ErrorResponse;
 import com.cfckata.sample.sales.domain.OrderStatus;
 import com.cfckata.sample.sales.domain.SalesOrder;
 import com.cfckata.sample.sales.request.ChangeOrderRequest;
@@ -134,7 +135,7 @@ public class SalesOrderControllerTest extends ApiTest {
         this.restTemplate.delete(baseUrl + "/orders/"+ orderId);
 
         //Then
-        ResponseEntity<SalesOrder> responseEntity = this.restTemplate.getForEntity(baseUrl + "/orders/" + orderId, SalesOrder.class);
+        ResponseEntity<ErrorResponse> responseEntity = this.restTemplate.getForEntity(baseUrl + "/orders/" + orderId, ErrorResponse.class);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 

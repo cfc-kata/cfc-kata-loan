@@ -15,22 +15,37 @@ import javax.servlet.http.HttpServletRequest;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ExceptionMapperHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> exceptionHandler(Exception exception) {
+    public ResponseEntity<ErrorResponse> exceptionHandler(Exception exception) {
         logger.error("ResponseException exception: {}", exception);
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(
+                new ErrorResponse(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), exception.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler({EntityNotFoundException.class})
-    public ResponseEntity<String> handleSizeExceededException(HttpServletRequest request, EntityNotFoundException exception) {
+    public ResponseEntity<ErrorResponse> handleSizeExceededException(HttpServletRequest request, EntityNotFoundException exception) {
         logger.error("EntityNotFoundException exception: {}", exception);
 
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(
+                new ErrorResponse(String.valueOf(HttpStatus.NOT_FOUND.value()), exception.getMessage()),
+                HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({IllegalArgumentException.class})
-    public ResponseEntity<String> handleIllegalArgumentException(HttpServletRequest request, IllegalArgumentException exception) {
+    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(HttpServletRequest request, IllegalArgumentException exception) {
         logger.error("IllegalArgumentException exception: {}", exception);
 
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(
+                new ErrorResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()), exception.getMessage()),
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({BusinessException.class})
+    public ResponseEntity<ErrorResponse> handleBusinessException(HttpServletRequest request, BusinessException exception) {
+        logger.error("Business exception: {}", exception);
+
+        return new ResponseEntity<>(
+                new ErrorResponse(exception.getErrorCode(), exception.getMessage()),
+                HttpStatus.BAD_REQUEST);
     }
 }

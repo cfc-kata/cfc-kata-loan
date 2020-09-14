@@ -1,5 +1,6 @@
 package com.cfckata.loan.loan;
 
+import com.cfckata.loan.loan.domain.Loan;
 import com.cfckata.loan.loan.request.CreateLoanRequest;
 import com.cfckata.loan.loan.response.CreateLoanResponse;
 import com.cfckata.loan.loan.response.LoanResponse;
@@ -19,10 +20,19 @@ import java.util.Arrays;
 @RestController
 @RequestMapping("/loans")
 public class LoanController {
+
+    private LoanService loanService;
+
+    public LoanController(LoanService loanService) {
+        this.loanService = loanService;
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CreateLoanResponse createContract(@RequestBody CreateLoanRequest request) {
-        return new CreateLoanResponse("JT-001");
+        Loan loan = loanService.createLoan(request);
+
+        return new CreateLoanResponse(loan);
     }
 
     @GetMapping("/{id}")

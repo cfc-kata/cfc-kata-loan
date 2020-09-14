@@ -1,6 +1,7 @@
 package com.cfckata.loan;
 
 import com.cfckata.common.ApiTest;
+import com.cfckata.exception.ErrorResponse;
 import com.cfckata.loan.contract.request.CreateContractRequest;
 import com.cfckata.loan.contract.response.ContractResponse;
 import com.cfckata.loan.contract.response.CreateContractResponse;
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContractControllerTest extends ApiTest {
+
     @Test
     void should_create_contract() {
         CreateContractRequest request = new CreateContractRequest(
@@ -33,7 +35,7 @@ public class ContractControllerTest extends ApiTest {
                 new LoanCustomer("BJ001", "张三", "101010200001012356", "18812345678"),
                 new BigDecimal("9.9"), "DEBX", "2022-05-01", new BigDecimal("9000000000.00"));
 
-        ResponseEntity<CreateContractResponse> responseEntity = this.restTemplate.postForEntity(baseUrl + "/contracts/", request, CreateContractResponse.class);
+        ResponseEntity<ErrorResponse> responseEntity = this.restTemplate.postForEntity(baseUrl + "/contracts/", request, ErrorResponse.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
