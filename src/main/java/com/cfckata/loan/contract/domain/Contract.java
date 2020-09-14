@@ -150,10 +150,6 @@ public class Contract implements Versionable, Serializable {
         return version;
     }
 
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
     private static class CommitmentRange {
         private final int ageFrom;
         private final int ageTo;
@@ -168,7 +164,7 @@ public class Contract implements Versionable, Serializable {
         public void validateAgeCommitment(int age, BigDecimal commitment) {
             if (age >= ageFrom && age <= ageTo && commitment.compareTo(maxCommitment) > 0) {
                 throw new IllegalArgumentException(
-                        String.format("The customer is %d years old, and his/her commitment should less than %s", age, maxCommitment));
+                        String.format("The customer is %d years old, his/her commitment should less than %s", age, maxCommitment));
             }
         }
     }

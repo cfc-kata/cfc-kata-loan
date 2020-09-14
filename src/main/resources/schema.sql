@@ -54,6 +54,6 @@ create table if not exists contract (
     repayment_type varchar(20) not null,
     maturity_date datetime not null,
     status varchar(40) not null,
-    version int,
+    version int not null,
     primary key (id)
 );
