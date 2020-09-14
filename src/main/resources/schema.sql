@@ -31,17 +31,7 @@ create table if not exists customer (
     primary key (id)
 );
 
-
---LOAN
---        this.id = id;
---         this.customer = customer;
---         this.interestRate = interestRate;
---         this.repaymentType = repaymentType;
---         this.maturityDate = maturityDate;
---         this.commitment = commitment;
---         this.createdAt = createdAt;
---         this.status = status;
-
+------------------ Loan ---------------------
 create table if not exists contract (
     id varchar(20) not null,
     create_time datetime not null,
@@ -56,4 +46,29 @@ create table if not exists contract (
     status varchar(40) not null,
     version int not null,
     primary key (id)
+);
+
+create table if not exists loan (
+    id varchar(20) not null,
+    created_at datetime not null,
+    contract_id varchar(20) not null,
+    apply_amount decimal(12, 2) not null,
+    total_month int not null,
+    interest_rate decimal(12, 2) not null,
+    withdraw_bank_account varchar(20) not null,
+    repayment_bank_account varchar(20) not null,
+    repayment_type varchar(20) not null,
+    version int not null,
+    primary key (id)
+);
+
+create table if not exists repayment_plan (
+    loan_id varchar(20) not null,
+    plan_no int not null,
+    payable_date datetime not null,
+    payable_amount decimal(12, 2) not null,
+    payable_interest decimal(12, 2) not null,
+    payable_capital decimal(12, 2) not null,
+    status varchar(40) not null,
+    primary key(loan_id, plan_no)
 );

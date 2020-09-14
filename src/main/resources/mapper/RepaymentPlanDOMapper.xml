@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cfckata.loan.contract.dao.dao.RepaymentPlanDOMapper">
+  <resultMap id="BaseResultMap" type="com.cfckata.loan.loan.dao.RepaymentPlanDO">
+    <id column="loan_id" jdbcType="VARCHAR" property="loanId" />
+    <id column="plan_no" jdbcType="INTEGER" property="planNo" />
+    <result column="payable_date" jdbcType="TIMESTAMP" property="payableDate" />
+    <result column="payable_amount" jdbcType="DECIMAL" property="payableAmount" />
+    <result column="payable_interest" jdbcType="DECIMAL" property="payableInterest" />
+    <result column="payable_capital" jdbcType="DECIMAL" property="payableCapital" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    loan_id, plan_no, payable_date, payable_amount, payable_interest, payable_capital,
+    status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.cfckata.loan.loan.dao.RepaymentPlanDOKey" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from repayment_plan
+    where loan_id = #{loanId,jdbcType=VARCHAR}
+      and plan_no = #{planNo,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.cfckata.loan.loan.dao.RepaymentPlanDOKey">
+    delete from repayment_plan
+    where loan_id = #{loanId,jdbcType=VARCHAR}
+      and plan_no = #{planNo,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cfckata.loan.loan.dao.RepaymentPlanDO">
+    insert into repayment_plan (loan_id, plan_no, payable_date,
+      payable_amount, payable_interest, payable_capital,
+      status)
+    values (#{loanId,jdbcType=VARCHAR}, #{planNo,jdbcType=INTEGER}, #{payableDate,jdbcType=TIMESTAMP},
+      #{payableAmount,jdbcType=DECIMAL}, #{payableInterest,jdbcType=DECIMAL}, #{payableCapital,jdbcType=DECIMAL},
+      #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cfckata.loan.loan.dao.RepaymentPlanDO">
+    insert into repayment_plan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="loanId != null">
+        loan_id,
+      </if>
+      <if test="planNo != null">
+        plan_no,
+      </if>
+      <if test="payableDate != null">
+        payable_date,
+      </if>
+      <if test="payableAmount != null">
+        payable_amount,
+      </if>
+      <if test="payableInterest != null">
+        payable_interest,
+      </if>
+      <if test="payableCapital != null">
+        payable_capital,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="loanId != null">
+        #{loanId,jdbcType=VARCHAR},
+      </if>
+      <if test="planNo != null">
+        #{planNo,jdbcType=INTEGER},
+      </if>
+      <if test="payableDate != null">
+        #{payableDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payableAmount != null">
+        #{payableAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="payableInterest != null">
+        #{payableInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="payableCapital != null">
+        #{payableCapital,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cfckata.loan.loan.dao.RepaymentPlanDO">
+    update repayment_plan
+    <set>
+      <if test="payableDate != null">
+        payable_date = #{payableDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payableAmount != null">
+        payable_amount = #{payableAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="payableInterest != null">
+        payable_interest = #{payableInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="payableCapital != null">
+        payable_capital = #{payableCapital,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where loan_id = #{loanId,jdbcType=VARCHAR}
+      and plan_no = #{planNo,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cfckata.loan.loan.dao.RepaymentPlanDO">
+    update repayment_plan
+    set payable_date = #{payableDate,jdbcType=TIMESTAMP},
+      payable_amount = #{payableAmount,jdbcType=DECIMAL},
+      payable_interest = #{payableInterest,jdbcType=DECIMAL},
+      payable_capital = #{payableCapital,jdbcType=DECIMAL},
+      status = #{status,jdbcType=VARCHAR}
+    where loan_id = #{loanId,jdbcType=VARCHAR}
+      and plan_no = #{planNo,jdbcType=INTEGER}
+  </update>
+</mapper>
