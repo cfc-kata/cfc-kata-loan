@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cfckata.loan.contract.dao.dao.RepaymentPlanDOMapper">
+<mapper namespace="com.cfckata.loan.loan.dao.RepaymentPlanDOMapper">
   <resultMap id="BaseResultMap" type="com.cfckata.loan.loan.dao.RepaymentPlanDO">
     <id column="loan_id" jdbcType="VARCHAR" property="loanId" />
     <id column="plan_no" jdbcType="INTEGER" property="planNo" />
@@ -21,10 +21,20 @@
     where loan_id = #{loanId,jdbcType=VARCHAR}
       and plan_no = #{planNo,jdbcType=INTEGER}
   </select>
+  <select id="selectByLoanId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from repayment_plan
+    where loan_id = #{loanId,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="com.cfckata.loan.loan.dao.RepaymentPlanDOKey">
     delete from repayment_plan
     where loan_id = #{loanId,jdbcType=VARCHAR}
       and plan_no = #{planNo,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByLoanId" parameterType="java.lang.String">
+    delete from repayment_plan
+    where loan_id = #{loanId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.cfckata.loan.loan.dao.RepaymentPlanDO">
     insert into repayment_plan (loan_id, plan_no, payable_date,
@@ -83,6 +93,21 @@
       </if>
     </trim>
   </insert>
+  <insert id="insertAll" parameterType="java.util.List">
+    insert into repayment_plan (loan_id, plan_no, payable_date,
+    payable_amount, payable_interest, payable_capital, status)
+    values
+    <foreach collection="list" item="element" index="index" open="(" separator="),("  close=")">
+      #{element.loanId,jdbcType=VARCHAR},
+      #{element.planNo,jdbcType=INTEGER},
+      #{element.payableDate,jdbcType=TIMESTAMP},
+      #{element.payableAmount,jdbcType=DECIMAL},
+      #{element.payableInterest,jdbcType=DECIMAL},
+      #{element.payableCapital,jdbcType=DECIMAL},
+      #{element.status,jdbcType=VARCHAR}
+    </foreach>
+  </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.cfckata.loan.loan.dao.RepaymentPlanDO">
     update repayment_plan
     <set>

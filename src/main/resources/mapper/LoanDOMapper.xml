@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cfckata.loan.contract.dao.dao.LoanDOMapper">
+<mapper namespace="com.cfckata.loan.loan.dao.LoanDOMapper">
   <resultMap id="BaseResultMap" type="com.cfckata.loan.loan.dao.LoanDO">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
@@ -27,6 +27,10 @@
     delete from loan
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+  <delete id="delete" parameterType="com.cfckata.loan.loan.dao.LoanDO">
+    delete from loan
+    where id = #{id,jdbcType=VARCHAR} and version = #{version,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.cfckata.loan.loan.dao.LoanDO">
     insert into loan (id, created_at, contract_id,
       apply_amount, total_month, interest_rate,
@@ -35,7 +39,7 @@
     values (#{id,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{contractId,jdbcType=VARCHAR},
       #{applyAmount,jdbcType=DECIMAL}, #{totalMonth,jdbcType=INTEGER}, #{interestRate,jdbcType=DECIMAL},
       #{withdrawBankAccount,jdbcType=VARCHAR}, #{repaymentBankAccount,jdbcType=VARCHAR},
-      #{repaymentType,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER})
+      #{repaymentType,jdbcType=VARCHAR}, 1)
   </insert>
   <insert id="insertSelective" parameterType="com.cfckata.loan.loan.dao.LoanDO">
     insert into loan
@@ -67,9 +71,7 @@
       <if test="repaymentType != null">
         repayment_type,
       </if>
-      <if test="version != null">
         version,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -99,9 +101,7 @@
       <if test="repaymentType != null">
         #{repaymentType,jdbcType=VARCHAR},
       </if>
-      <if test="version != null">
-        #{version,jdbcType=INTEGER},
-      </if>
+        1,
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.cfckata.loan.loan.dao.LoanDO">
@@ -131,11 +131,9 @@
       <if test="repaymentType != null">
         repayment_type = #{repaymentType,jdbcType=VARCHAR},
       </if>
-      <if test="version != null">
-        version = #{version,jdbcType=INTEGER},
-      </if>
+        version = version + 1,
     </set>
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR} and version = #{version,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.cfckata.loan.loan.dao.LoanDO">
     update loan
@@ -147,7 +145,7 @@
       withdraw_bank_account = #{withdrawBankAccount,jdbcType=VARCHAR},
       repayment_bank_account = #{repaymentBankAccount,jdbcType=VARCHAR},
       repayment_type = #{repaymentType,jdbcType=VARCHAR},
-      version = #{version,jdbcType=INTEGER}
-    where id = #{id,jdbcType=VARCHAR}
+      version = version + 1
+    where id = #{id,jdbcType=VARCHAR} and version = #{version,jdbcType=INTEGER}
   </update>
 </mapper>

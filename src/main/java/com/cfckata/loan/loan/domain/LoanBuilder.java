@@ -72,7 +72,7 @@ public class LoanBuilder {
     }
 
     public LoanBuilder setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = createdAt.withNano((createdAt.getNano() / (1000 * 1000)) * 1000 * 1000);
         return this;
     }
 

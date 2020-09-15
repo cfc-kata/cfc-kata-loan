@@ -1,7 +1,10 @@
-package com.cfckata.loan.contract.dao.dao;
+package com.cfckata.loan.loan.dao;
 
-import com.cfckata.loan.loan.dao.LoanDO;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
+@Mapper
+@Repository
 public interface LoanDOMapper {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +17,6 @@ public interface LoanDOMapper {
     int updateByPrimaryKeySelective(LoanDO record);
 
     int updateByPrimaryKey(LoanDO record);
+
+    int delete(LoanDO loanDO);
 }

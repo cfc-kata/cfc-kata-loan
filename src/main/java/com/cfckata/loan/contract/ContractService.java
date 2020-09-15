@@ -36,7 +36,7 @@ public class ContractService {
 
         repository.save(AggregateFactory.createAggregate(contract));
 
-        return contract;
+        return findContractById(contract.getId());
     }
 
     public Contract findContractById(String id) {

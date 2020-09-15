@@ -5,6 +5,14 @@ public class RepaymentPlanDOKey {
 
     private Integer planNo;
 
+    public RepaymentPlanDOKey() {
+    }
+
+    public RepaymentPlanDOKey(String loanId, Integer planNo) {
+        this.loanId = loanId;
+        this.planNo = planNo;
+    }
+
     public String getLoanId() {
         return loanId;
     }

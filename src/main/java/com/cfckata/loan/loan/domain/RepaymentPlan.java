@@ -45,4 +45,8 @@ public class RepaymentPlan implements Serializable {
     public RepaymentPlanStatus getStatus() {
         return status;
     }
+
+    void setStatus(RepaymentPlanStatus status) {
+        this.status = status;
+    }
 }

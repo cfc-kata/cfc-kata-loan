@@ -1,5 +1,8 @@
 package com.cfckata.loan.loan.dao;
 
+import com.cfckata.common.LocalDateTimeUtils;
+import com.cfckata.loan.loan.domain.Loan;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -23,6 +26,22 @@ public class LoanDO {
     private String repaymentType;
 
     private Integer version;
+
+    public LoanDO() {
+    }
+
+    public LoanDO(Loan loan) {
+        setId(loan.getId());
+        setCreatedAt(LocalDateTimeUtils.toDate(loan.getCreatedAt()));
+        setContractId(loan.getContractId());
+        setApplyAmount(loan.getApplyAmount());
+        setTotalMonth(loan.getTotalMonth());
+        setInterestRate(loan.getInterestRate());
+        setWithdrawBankAccount(loan.getWithdrawBankAccount());
+        setRepaymentBankAccount(loan.getRepaymentBankAccount());
+        setRepaymentType(loan.getRepaymentType().name());
+        setVersion(loan.getVersion());
+    }
 
     public String getId() {
         return id;

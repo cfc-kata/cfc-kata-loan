@@ -1,5 +1,9 @@
 package com.cfckata.loan.loan.dao;
 
+import com.cfckata.common.LocalDateTimeUtils;
+import com.cfckata.loan.loan.domain.RepaymentPlan;
+import com.cfckata.loan.loan.domain.RepaymentPlanStatus;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -13,6 +17,19 @@ public class RepaymentPlanDO extends RepaymentPlanDOKey {
     private BigDecimal payableCapital;
 
     private String status;
+
+    public RepaymentPlanDO() {
+    }
+
+    public RepaymentPlanDO(String loanId, RepaymentPlan repaymentPlan) {
+        setLoanId(loanId);
+        setPlanNo(repaymentPlan.getNo());
+        payableDate = LocalDateTimeUtils.toDate(repaymentPlan.getPayableDate().atStartOfDay());
+        payableAmount = repaymentPlan.getPayableAmount();
+        payableInterest = repaymentPlan.getPayableInterest();
+        payableCapital = repaymentPlan.getPayableCapital();
+        status = repaymentPlan.getStatus().name();
+    }
 
     public Date getPayableDate() {
         return payableDate;
@@ -52,5 +69,18 @@ public class RepaymentPlanDO extends RepaymentPlanDOKey {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public RepaymentPlan toEntity() {
+        RepaymentPlan plan = new RepaymentPlan(
+                getPlanNo(),
+                LocalDateTimeUtils.toLocalDateTime(getPayableDate()).toLocalDate(),
+                getPayableAmount(),
+                getPayableInterest(),
+                getPayableCapital(),
+                RepaymentPlanStatus.valueOf(getStatus())
+        );
+
+        return plan;
     }
 }

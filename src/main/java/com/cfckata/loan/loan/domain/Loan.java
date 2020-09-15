@@ -18,15 +18,14 @@ public class Loan implements Versionable, Serializable {
     private Integer totalMonth;
     private BigDecimal interestRate;
     private String withdrawBankAccount;
-    private String repaymentBank;
+    private String repaymentBankAccount;
     private RepaymentType repaymentType;
     private List<RepaymentPlan> repaymentPlans;
-    @Transient
-    private RepaymentPlanCalculator calculator;
+    private transient RepaymentPlanCalculator calculator;
     private int version;
 
     Loan(String id, LocalDateTime createdAt, String contractId, BigDecimal applyAmount, int totalMonth,
-         BigDecimal interestRate, String withdrawBankAccount, String repaymentBank,
+         BigDecimal interestRate, String withdrawBankAccount, String repaymentBankAccount,
          RepaymentType repaymentType, List<RepaymentPlan> repaymentPlans, int version) {
         this.id = id;
         this.createdAt = createdAt;
@@ -35,7 +34,7 @@ public class Loan implements Versionable, Serializable {
         this.totalMonth = totalMonth;
         this.interestRate = interestRate;
         this.withdrawBankAccount = withdrawBankAccount;
-        this.repaymentBank = repaymentBank;
+        this.repaymentBankAccount = repaymentBankAccount;
         this.repaymentType = repaymentType;
         this.repaymentPlans = repaymentPlans;
 
@@ -58,9 +57,37 @@ public class Loan implements Versionable, Serializable {
         this.repaymentPlans = calculator.calculateRepaymentPlan(this);
     }
 
+    public void payPlan(int planNo) {
+        for (RepaymentPlan repaymentPlan : repaymentPlans) {
+            if (repaymentPlan.getNo().equals(planNo)) {
+                repaymentPlan.setStatus(RepaymentPlanStatus.PAID);
+                return;
+            }
+        }
+
+        throw new IllegalArgumentException(String.format("loan no (%s, %d) not exists.", id, planNo));
+    }
+
+    public void changeTotalMonth(Integer totalMonth) {
+        if (this.totalMonth.equals(totalMonth)) {
+            return;
+        }
+
+        //TODO: status check
+        int oldCount = this.totalMonth;
+        try {
+            this.totalMonth = totalMonth;
+            validate();
+        } catch (Exception e) {
+            this.totalMonth = oldCount;
+        }
+
+        calculateRepaymentPlan();
+    }
+
     @Override
     public int getVersion() {
-        return 0;
+        return version;
     }
 
     public String getId() {
@@ -91,8 +118,8 @@ public class Loan implements Versionable, Serializable {
         return withdrawBankAccount;
     }
 
-    public String getRepaymentBank() {
-        return repaymentBank;
+    public String getRepaymentBankAccount() {
+        return repaymentBankAccount;
     }
 
     public RepaymentType getRepaymentType() {

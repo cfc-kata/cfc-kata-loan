@@ -171,7 +171,7 @@
       repayment_type = #{repaymentType,jdbcType=VARCHAR},
       maturity_date = #{maturityDate,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=VARCHAR},
-      version = #{version,jdbcType=INTEGER}
-    where id = #{id,jdbcType=VARCHAR}
+      version = version + 1
+    where id = #{id,jdbcType=VARCHAR} and version = #{version,jdbcType=INTEGER}
   </update>
 </mapper>
