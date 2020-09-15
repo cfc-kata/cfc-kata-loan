@@ -60,6 +60,6 @@ public class ContractService {
      * @param loanId 借条号
      */
     public void cancelPreserveCommitment(String loanId) {
-
+        //
     }
 }

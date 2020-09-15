@@ -7,6 +7,6 @@ import java.math.BigDecimal;
 @Service
 public class UnionPayProxy {
     public void pay(String loanId, BigDecimal applyAmount, String bankAccount) throws UnionPayFailedException{
-
+        //
     }
 }

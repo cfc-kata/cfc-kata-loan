@@ -86,13 +86,14 @@ class LoanRepositoryTest extends RepositoryTest {
 
     @Test
     void should_delete_loan() {
+        String loanId = loan.getId();
         Aggregate<Loan> aggregate = AggregateFactory.createAggregate(loan);
         repository.save(aggregate);
-        aggregate = repository.findById(loan.getId());
+        aggregate = repository.findById(loanId);
         repository.remove(aggregate);
 
         assertThrows(EntityNotFoundException.class, () -> {
-            repository.findById(loan.getId());
+            repository.findById(loanId);
         });
     }
 }
