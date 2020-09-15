@@ -44,10 +44,21 @@ public class ContractService {
         return repository.findById(id).getRoot();
     }
 
+    /**
+     * 预留额度。在放款前要预留额度，如果预留成功才可以继续放款。
+     * @param contractId 合同号
+     * @param loanId 借条号
+     * @param applyAmount 预留金额
+     * @return
+     */
     public boolean preserveCommitment(String contractId, String loanId, BigDecimal applyAmount) {
         return false;
     }
 
+    /**
+     * 释放预留的额度。当借条已经还完，或者放款过程异常，需要回复之前预留的额度
+     * @param loanId 借条号
+     */
     public void cancelPreserveCommitment(String loanId) {
 
     }
