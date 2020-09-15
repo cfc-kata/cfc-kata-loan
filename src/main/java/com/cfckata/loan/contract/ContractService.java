@@ -8,6 +8,7 @@ import com.cfckata.loan.contract.request.CreateContractRequest;
 import com.github.meixuesong.aggregatepersistence.AggregateFactory;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,5 +42,13 @@ public class ContractService {
 
     public Contract findContractById(String id) {
         return repository.findById(id).getRoot();
+    }
+
+    public boolean preserveCommitment(String contractId, String loanId, BigDecimal applyAmount) {
+        return false;
+    }
+
+    public void cancelPreserveCommitment(String loanId) {
+
     }
 }
