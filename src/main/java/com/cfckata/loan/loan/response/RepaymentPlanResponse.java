@@ -1,9 +1,11 @@
 package com.cfckata.loan.loan.response;
 
+import com.cfckata.loan.loan.domain.RepaymentPlan;
+
 import java.math.BigDecimal;
+import java.time.format.DateTimeFormatter;
 
 public class RepaymentPlanResponse {
-    private String planId;
     private Integer periodNo;
     private String payableDate;
     private BigDecimal payableAmount;
@@ -14,9 +16,8 @@ public class RepaymentPlanResponse {
     public RepaymentPlanResponse() {
     }
 
-    public RepaymentPlanResponse(String planId, Integer periodNo, String payableDate, BigDecimal payableAmount,
+    public RepaymentPlanResponse(Integer periodNo, String payableDate, BigDecimal payableAmount,
                                  BigDecimal payableInterest, BigDecimal payableCapital, String status) {
-        this.planId = planId;
         this.periodNo = periodNo;
         this.payableDate = payableDate;
         this.payableAmount = payableAmount;
@@ -25,12 +26,13 @@ public class RepaymentPlanResponse {
         this.status = status;
     }
 
-    public String getPlanId() {
-        return planId;
-    }
-
-    public void setPlanId(String planId) {
-        this.planId = planId;
+    public RepaymentPlanResponse(RepaymentPlan repaymentPlan) {
+        this.periodNo = repaymentPlan.getNo();
+        this.payableDate = repaymentPlan.getPayableDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        this.payableAmount = repaymentPlan.getPayableAmount();
+        this.payableInterest = repaymentPlan.getPayableInterest();
+        this.payableCapital = repaymentPlan.getPayableCapital();
+        this.status = repaymentPlan.getStatus().name();
     }
 
     public Integer getPeriodNo() {

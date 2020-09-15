@@ -6,6 +6,7 @@ import com.cfckata.loan.loan.domain.Loan;
 import com.cfckata.loan.loan.request.CreateLoanRequest;
 import com.cfckata.loan.proxy.UnionPayFailedException;
 import com.cfckata.loan.proxy.UnionPayProxy;
+import com.github.meixuesong.aggregatepersistence.Aggregate;
 import com.github.meixuesong.aggregatepersistence.AggregateFactory;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +42,9 @@ public class LoanService {
         repository.save(AggregateFactory.createAggregate(loan));
 
         return repository.findById(loan.getId()).getRoot();
+    }
+
+    public Loan findById(String id) {
+        return repository.findById(id).getRoot();
     }
 }

@@ -38,11 +38,9 @@ public class LoanController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public LoanResponse queryLoan(@PathVariable String id) {
-        return new LoanResponse("JT-001", "HT-001", new BigDecimal("3000"), 12, new BigDecimal("9.9"),
-                "QK_CARD", "KK_CARD", "DEBX",
-                Arrays.asList(new RepaymentPlanResponse("PLANID", 1, "2020-01-01",
-                        new BigDecimal("366"), new BigDecimal("300"), new BigDecimal("66"),
-                        "PLAN")));
+        Loan loan = loanService.findById(id);
+
+        return new LoanResponse(loan);
     }
 
 }

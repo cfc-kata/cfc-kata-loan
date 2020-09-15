@@ -1,0 +1,461 @@
+swagger: '2.0'
+info:
+  description: |
+    宇宙消费金融公司是一家旨在永续提升全人类生活水平的信贷服务公司，为了更好服务全人类，特聘请你开发个人消费金融开放平台，提供开放API服务。任何第三方都可以通过此平台服务全人类，这是一个伟大的梦想，有赖你来实现！
+  version: 1.0.0
+  title: 宇宙消费金融开放平台
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: meixuesong@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+# host: petstore.swagger.io
+# basePath: /v2
+tags:
+  - name: contract
+    description: 合同
+  - name: loan
+    description: 放款
+  - name: repayment
+    description: 还款
+# schemes:
+# - http
+paths:
+  /contracts:
+    post:
+      tags:
+        - contract
+      summary: "创建合同。有一下规则：年龄应该达到18岁，年利率不得超过36%，期限是不得超过2年。最大额度与年龄的关系如下：[18-20]: 1万；(20-30]:5万；(30-50]:20万；(50-60]:3万；(60-70]:1万；(70-]:0；"
+      operationId: createContract
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: contract
+          required: true
+          schema:
+            $ref: '#/definitions/Contract'
+      responses:
+        201:
+          description: Created
+          schema:
+            $ref: '#/definitions/ContractCreatedResponse'
+        405:
+          description: Invalid input
+
+  /contracts/{contractId}:
+    get:
+      tags:
+        - contract
+      summary: "查询合同"
+      operationId: findContractById
+      description: Returns a single contract
+      produces:
+        - application/json
+      parameters:
+        - name: contractId
+          in: path
+          description: ID of contract to return
+          required: true
+          type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ContractResponse'
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Contract not found
+  /loans:
+    post:
+      tags:
+        - loan
+      summary: "放款。钱对宇宙公司来说从来不是问题，因此只要客户提款都会自动放款。放款成功后，自动生成借据和还款计划。目前只支持等额本金还款方式。有以下规则：放款总额不能超过合同总额度；合同过期不能放款；银行支付接口失败时，本次操作失败，需要重新发起放款。"
+      operationId: createLoan
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: loanRequest
+          required: true
+          schema:
+            $ref: '#/definitions/loanRequest'
+      responses:
+        201:
+          description: Created 已放款
+          schema:
+            $ref: '#/definitions/loanCreatedResponse'
+        500:
+          description: 放款失败
+          schema:
+            $ref: '#/definitions/errorResponse'
+        405:
+          description: Invalid input
+  /loans/{loanId}:
+    get:
+      tags:
+        - loan
+      summary: 查询放款详情
+      description: Returns a single loan
+      operationId: findLoanById
+      produces:
+        - application/json
+      parameters:
+        - name: loanId
+          in: path
+          description: ID of loan to return
+          required: true
+          type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/LoanResponse'
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Contract not found
+  /repayments:
+    post:
+      tags:
+        - repayment
+      summary: "扣款。自动根据还款计划ID扣款，扣款成功时，要修改还款计划的状态。规则如下：如果余额不足则失败。银行执行扣款时，可能发生接口异常，卡状态异常等原因导致扣款失败。"
+      operationId: createRepayment
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: repaymentRequest
+          required: true
+          schema:
+            $ref: '#/definitions/repaymentRequest'
+      responses:
+        201:
+          description: Created 扣款成功
+          schema:
+            $ref: '#/definitions/repaymentCreatedResponse'
+        500:
+          description: 扣款失败
+          schema:
+            $ref: '#/definitions/errorResponse'
+        405:
+          description: Invalid input
+  /repayments/{repaymentId}:
+    get:
+      tags:
+        - repayment
+      summary: 查询扣款详情
+      operationId: findRepaymentById
+      description: Returns a single repayment
+      produces:
+        - application/json
+      parameters:
+        - name: repaymentId
+          in: path
+          description: ID of repayment to return
+          required: true
+          type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/repaymentCreatedResponse'
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Contract not found
+  /repayments/batch/{repaymentDate}:
+    post:
+      tags:
+        - repayment
+      summary: "批量自动扣款，查询某天应还的所有还款计划，自动扣款。扣款成功时，要修改还款计划的状态。规则如下：如果余额不足则失败。银行执行扣款时，可能发生接口异常，卡状态异常等原因导致扣款失败。"
+      operationId: batchRepayment
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: repaymentDate
+          required: true
+          type: string
+      responses:
+        201:
+          description: Created 已接受命令，详细扣款结果见记录
+          schema:
+            $ref: '#/definitions/repaymentBatchResponse'
+        405:
+          description: Invalid input
+
+definitions:
+  repaymentRequest:
+    type: object
+    properties:
+      repaymentPlanId:
+        type: string
+  repaymentCreatedResponse:
+    type: object
+    properties:
+      repaymentId:
+        type: string
+        example: '扣款流水号'
+      createdTime:
+        type: string
+        example: '2020-09-02 12:00:21:300'
+      loanId:
+        type: string
+        example: '借据号'
+      repaymentPlanId:
+        type: string
+        example: '还款计划行ID'
+      amount:
+        type: number
+        example: 366.00
+        description: 还款金额
+      repaymentBankAccount:
+        type: string
+        example: '还款卡号'
+  repaymentBatchResponse:
+    type: object
+    properties:
+      successItems:
+        type: array
+        items:
+          $ref: '#/definitions/repaymentCreatedResponse'
+      failedItems:
+        type: array
+        items:
+          $ref: '#/definitions/repaymentFailedResponse'
+  repaymentFailedResponse:
+    type: object
+    properties:
+      createdTime:
+        type: string
+        example: '2020-09-02 12:00:21:300'
+      contractId:
+        type: string
+        example: '合同号'
+      repaymentPlanId:
+        type: string
+        example: '还款计划行ID'
+      amount:
+        type: number
+        example: 366.00
+        description: 还款金额
+      repaymentBankAccount:
+        type: string
+        example: '还款卡号'
+      errorCode:
+        type: string
+        example: 'ERROR-001'
+      errorMessage:
+        type: string
+        example: '余额不足'
+
+
+  errorResponse:
+    type: object
+    properties:
+      errorCode:
+        type: string
+        example: 'ERROR-001'
+      errorMessage:
+        type: string
+        example: '错误消息'
+  loanRequest:
+    type: object
+    properties:
+      contractId:
+        type: string
+        example: '合同号'
+      applyAmount:
+        type: number
+        example: 3000.00
+        description: 申请提款金额
+      totalMonth:
+        type: integer
+        example: 12
+        description: 期数
+      interestRate:
+        type: number
+        example: 9.9
+        description: 年利率
+      withdrawBankAccount:
+        type: string
+        example: '取款卡号'
+      repaymentBankAccount:
+        type: string
+        example: '还款/扣款卡号'
+      repaymentType:
+        type: string
+        description: 等额本金、等额本息
+        enum:
+          - DEBX
+          - DEBJ
+
+  loanCreatedResponse:
+    type: object
+    properties:
+      loanId:
+        type: string
+
+  LoanResponse:
+    type: object
+    properties:
+      loanId:
+        type: string
+      contractId:
+        type: string
+        example: '合同号'
+      applyAmount:
+        type: number
+        example: 3000.00
+        description: 取款金额
+      totalMonth:
+        type: integer
+        example: 12
+        description: 期数（月）
+      interestRate:
+        type: number
+        example: 9.9
+        description: 年利率
+      withdrawBankAccount:
+        type: string
+        example: '取款卡号'
+      repaymentBankAccount:
+        type: string
+        example: '还款/扣款卡号'
+      repaymentType:
+        type: string
+        enum:
+          - DEBX
+          - DEBJ
+      repaymentPlans:
+        type: array
+        items:
+          $ref: '#/definitions/repaymentPlan'
+  repaymentPlan:
+    type: object
+    properties:
+      planId:
+        type: string
+        description: 还款计划行ID
+      periodNo:
+        type: integer
+        example: 1
+        description: 还款计划第几期
+      payableDate:
+        type: string
+        example: '2020-01-01'
+        description: 还款日期
+      payableAmount:
+        type: number
+        example: 366.00
+        description: 应还总额
+      payableInterest:
+        type: number
+        example: 66.00
+        description: 应还利息
+      payableCapital:
+        type: number
+        example: 300.00
+        description: 应还本金
+      status:
+        type: string
+        enum:
+          - PLAN
+          - PAID
+          - OVERDUE
+        example: OVERDUE
+
+
+
+  Customer:
+    type: object
+    properties:
+      id:
+        type: string
+        example: 'BJ001'
+      name:
+        type: string
+        example: '张三'
+      idNumber:
+        type: string
+        example: '410103200107012345'
+      mobilePhone:
+        type: string
+  ContractCreatedResponse:
+    type: object
+    properties:
+      contractId:
+        type: string
+  Contract:
+    type: object
+    required:
+      - name
+      - photoUrls
+    properties:
+      customer:
+        $ref: '#/definitions/Customer'
+      interestRate:
+        type: number
+        example: 9.9
+        description: 年利率
+      repaymentType:
+        type: string
+        description: 等额本金、等额本息
+        enum:
+          - DEBX
+          - DEBJ
+      maturityDate:
+        type: string
+        example: '2022-05-01'
+        description: 到期日
+      commitment:
+        type: number
+        description: 总额度
+        example: 9000
+  ContractResponse:
+    type: object
+    properties:
+      contractId:
+        type: string
+      customer:
+        $ref: '#/definitions/Customer'
+      interestRate:
+        type: number
+        example: 9.9
+        description: 年利率
+      repaymentType:
+        type: string
+        enum:
+          - DEBX
+          - DEBJ
+      maturityDate:
+        type: string
+        example: '2022-05-01'
+        description: 合同到期日
+      commitment:
+        type: number
+        example: 9000
+        description: 合同总额度
+      status:
+        type: string
+        enum:
+          - ACTIVE
+          - DEACTIVE
+
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /meixuesong/Contract/1.0.0
+schemes:
+  - https
+  - http

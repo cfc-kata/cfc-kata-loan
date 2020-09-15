@@ -35,7 +35,8 @@ class LoanControllerTest extends ApiTest {
     }
 
     @Test
-    void should_create_loan() {
+    void should_create_and_query_loan() {
+        //create loan
         CreateLoanRequest request = new CreateLoanRequest("HT-0000000001", new BigDecimal("3000"),
                 12, new BigDecimal("9.9"), "QK_card", "HK_card", "DEBX");
 
@@ -43,16 +44,13 @@ class LoanControllerTest extends ApiTest {
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(responseEntity.getBody().getLoanId()).isNotEmpty();
-    }
 
-    @Test
-    void should_query_loan_detail() {
-        String loanId = "JT-001";
+        //query loan
+        String loanId = responseEntity.getBody().getLoanId();
+        ResponseEntity<LoanResponse> response = this.restTemplate.getForEntity(baseUrl + "/loans/" + loanId, LoanResponse.class);
 
-        ResponseEntity<LoanResponse> responseEntity = this.restTemplate.getForEntity(baseUrl + "/loans/" + loanId, LoanResponse.class);
-
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody().getLoanId()).isEqualTo(loanId);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody().getLoanId()).isEqualTo(loanId);
     }
 
 }

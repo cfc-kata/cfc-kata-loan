@@ -1,7 +1,10 @@
 package com.cfckata.loan.loan.response;
 
+import com.cfckata.loan.loan.domain.Loan;
+
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LoanResponse {
     private String loanId;
@@ -29,6 +32,18 @@ public class LoanResponse {
         this.repaymentBankAccount = repaymentBankAccount;
         this.repaymentType = repaymentType;
         this.repaymentPlans = repaymentPlans;
+    }
+
+    public LoanResponse(Loan loan) {
+        this.loanId = loan.getId();
+        this.contractId = loan.getContractId();
+        this.applyAmount = loan.getApplyAmount();
+        this.totalMonth = loan.getTotalMonth();
+        this.interestRate = loan.getInterestRate();
+        this.withdrawBankAccount = loan.getWithdrawBankAccount();
+        this.repaymentBankAccount = loan.getRepaymentBankAccount();
+        this.repaymentType = loan.getRepaymentType().name();
+        this.repaymentPlans = loan.getRepaymentPlans().stream().map(RepaymentPlanResponse::new).collect(Collectors.toList());
     }
 
     public String getLoanId() {
