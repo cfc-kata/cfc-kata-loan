@@ -72,7 +72,7 @@ public class RepaymentPlanDO extends RepaymentPlanDOKey {
     }
 
     public RepaymentPlan toEntity() {
-        RepaymentPlan plan = new RepaymentPlan(
+        return new RepaymentPlan(
                 getPlanNo(),
                 LocalDateTimeUtils.toLocalDateTime(getPayableDate()).toLocalDate(),
                 getPayableAmount(),
@@ -80,7 +80,5 @@ public class RepaymentPlanDO extends RepaymentPlanDOKey {
                 getPayableCapital(),
                 RepaymentPlanStatus.valueOf(getStatus())
         );
-
-        return plan;
     }
 }

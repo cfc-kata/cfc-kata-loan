@@ -48,11 +48,11 @@ public class LoanFactory {
     }
 
     private List<RepaymentPlan> createPlans(List<RepaymentPlanDO> planDOList) {
-        return planDOList.stream().map(d -> d.toEntity()).collect(Collectors.toList());
+        return planDOList.stream().map(RepaymentPlanDO::toEntity).collect(Collectors.toList());
     }
 
     private LoanBuilder createLoanBuilder(LoanDO loanDO) {
-        LoanBuilder builder = new LoanBuilder()
+        return new LoanBuilder()
                 .setId(loanDO.getId())
                 .setContractId(loanDO.getContractId())
                 .setCreatedAt(LocalDateTimeUtils.toLocalDateTime(loanDO.getCreatedAt()))
@@ -63,8 +63,6 @@ public class LoanFactory {
                 .setRepaymentBankAccount(loanDO.getRepaymentBankAccount())
                 .setRepaymentType(RepaymentType.valueOf(loanDO.getRepaymentType()))
                 .setVersion(loanDO.getVersion());
-
-        return builder;
     }
 
 }

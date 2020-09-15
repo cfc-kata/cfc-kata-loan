@@ -82,7 +82,7 @@ public class LoanBuilder {
 
         loan.validate();
 
-        if (repaymentPlans.size() == 0) {
+        if (repaymentPlans.isEmpty()) {
             loan.calculateRepaymentPlan();
         }
 

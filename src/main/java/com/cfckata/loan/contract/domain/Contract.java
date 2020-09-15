@@ -21,7 +21,7 @@ public class Contract implements Versionable, Serializable {
     private ContractStatus status;
     private int version;
 
-    final static List<CommitmentRange> ranges = Arrays.asList(
+    static final List<CommitmentRange> ranges = Arrays.asList(
             new CommitmentRange(0, 17, 0),
             new CommitmentRange(18, 20, 1),
             new CommitmentRange(21, 30, 5),
@@ -31,7 +31,8 @@ public class Contract implements Versionable, Serializable {
             new CommitmentRange(71, 20000, 0)
     );
 
-    Contract(String id, LoanCustomer customer, BigDecimal interestRate, RepaymentType repaymentType, LocalDate maturityDate, BigDecimal commitment, LocalDateTime createdAt, ContractStatus status, int version) {
+    Contract(String id, LoanCustomer customer, BigDecimal interestRate, RepaymentType repaymentType,
+             LocalDate maturityDate, BigDecimal commitment, LocalDateTime createdAt, ContractStatus status, int version) {
         this.id = id;
         this.customer = customer;
         this.interestRate = interestRate;

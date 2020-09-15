@@ -6,7 +6,6 @@ import com.cfckata.loan.loan.domain.Loan;
 import com.cfckata.loan.loan.request.CreateLoanRequest;
 import com.cfckata.loan.proxy.UnionPayFailedException;
 import com.cfckata.loan.proxy.UnionPayProxy;
-import com.github.meixuesong.aggregatepersistence.Aggregate;
 import com.github.meixuesong.aggregatepersistence.AggregateFactory;
 import org.springframework.stereotype.Service;
 

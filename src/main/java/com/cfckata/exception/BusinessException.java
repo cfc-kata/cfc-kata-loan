@@ -1,7 +1,7 @@
 package com.cfckata.exception;
 
 public class BusinessException extends RuntimeException {
-    private String errorCode;
+    private final String errorCode;
 
     public BusinessException(String errorCode, String message) {
         super(message);

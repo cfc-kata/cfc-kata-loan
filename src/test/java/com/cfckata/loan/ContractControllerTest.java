@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ContractControllerTest extends ApiTest {
+class ContractControllerTest extends ApiTest {
 
     @Test
     void should_create_contract() {

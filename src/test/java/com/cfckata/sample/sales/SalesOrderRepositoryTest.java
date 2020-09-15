@@ -16,14 +16,14 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class SalesOrderRepositoryTest extends RepositoryTest {
+class SalesOrderRepositoryTest extends RepositoryTest {
     @Autowired
     private OrderRepository orderRepository;
 
     @Test
     @Sql(scripts = "classpath:sql/order-test-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/order-test-after.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-    public void should_save_order() {
+    void should_save_order() {
         String orderid = "ORDERID";
         SalesOrder salesOrder = createNormalTestOrder(orderid);
         orderRepository.save(AggregateFactory.createAggregate(salesOrder));

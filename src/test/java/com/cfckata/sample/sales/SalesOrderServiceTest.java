@@ -26,7 +26,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SalesOrderServiceTest {
+class SalesOrderServiceTest {
     private OrderService service;
     private OrderRepository orderRepository;
     private PayProxy payProxy;
@@ -36,7 +36,7 @@ public class SalesOrderServiceTest {
     private BigDecimal totalPrice;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         orderRepository = mock(OrderRepository.class);
         payProxy = mock(PayProxy.class);
         orderId = "orderid";
@@ -50,7 +50,7 @@ public class SalesOrderServiceTest {
     }
 
     @Test
-    public void should_pay_success_when_checkout_a_normal_order() {
+    void should_pay_success_when_checkout_a_normal_order() {
         //Given
         doNothing().when(payProxy).pay(anyString(), any());
 
@@ -62,7 +62,7 @@ public class SalesOrderServiceTest {
     }
 
     @Test
-    public void should_failed_to_pay_when_balance_insufficient() {
+    void should_failed_to_pay_when_balance_insufficient() {
         when(orderRepository.findById(same(orderId))).thenReturn(AggregateFactory.createAggregate(testOrder));
         doThrow(new InsufficientBalanceException()).when(payProxy).pay(anyString(), any());
 
@@ -75,7 +75,7 @@ public class SalesOrderServiceTest {
     }
 
     @Test
-    public void should_failed_to_pay_when_external_pay_server_timeout() {
+    void should_failed_to_pay_when_external_pay_server_timeout() {
         when(orderRepository.findById(same(orderId))).thenReturn(AggregateFactory.createAggregate(testOrder));
         doThrow(new TimeoutException()).when(payProxy).pay(anyString(), any());
 

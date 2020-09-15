@@ -20,12 +20,12 @@ import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SalesOrderControllerTest extends ApiTest {
+class SalesOrderControllerTest extends ApiTest {
 
     @Test
     @Sql(scripts = "classpath:sql/order-test-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/order-test-after.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-    public void should_query_order() {
+    void should_query_order() {
         String customerId = "TEST_USER_ID";
         String orderId = "TEST_ORDER";
 
@@ -42,7 +42,7 @@ public class SalesOrderControllerTest extends ApiTest {
     @Test
     @Sql(scripts = "classpath:sql/order-test-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/order-test-after.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-    public void should_support_create_order() {
+    void should_support_create_order() {
         //Given
         String customerId = "TEST_USER_ID";
 
@@ -67,7 +67,7 @@ public class SalesOrderControllerTest extends ApiTest {
     @Test
     @Sql(scripts = "classpath:sql/order-test-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/order-test-after.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-    public void should_support_update_order() {
+    void should_support_update_order() {
         //Given
         String orderId = "TEST_ORDER";
         String newCustomerId = "NEW_TEST_USER_ID";
@@ -96,7 +96,7 @@ public class SalesOrderControllerTest extends ApiTest {
     @Test
     @Sql(scripts = "classpath:sql/order-test-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/order-test-after.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-    public void should_support_new_order_item() {
+    void should_support_new_order_item() {
         //Given
         String orderId = "TEST_ORDER";
         String newCustomerId = "TEST_USER_ID";
@@ -127,7 +127,7 @@ public class SalesOrderControllerTest extends ApiTest {
     @Test
     @Sql(scripts = "classpath:sql/order-test-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/order-test-after.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-    public void should_support_remove_orderItems() {
+    void should_support_remove_orderItems() {
         //Given
         String orderId = "TEST_ORDER";
 
@@ -142,7 +142,7 @@ public class SalesOrderControllerTest extends ApiTest {
     @Test
     @Sql(scripts = "classpath:sql/order-test-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:sql/order-test-after.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-    public void should_checkout_order() {
+    void should_checkout_order() {
         //Given
         String orderId = "TEST_ORDER";
         BigDecimal amount = new BigDecimal("9000");

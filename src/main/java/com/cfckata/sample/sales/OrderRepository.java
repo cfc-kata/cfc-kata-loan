@@ -105,7 +105,7 @@ public class OrderRepository {
     }
 
     private void insertOrderItems(Aggregate<SalesOrder> orderAggregate) {
-        Collection<OrderItem> newEntities = orderAggregate.findNewEntities(SalesOrder::getItems, item -> item.getId() == null);
+        Collection<OrderItem> newEntities = orderAggregate.findCollectionDelta(SalesOrder::getItems, OrderItem::getId).get(Aggregate.DeltaType.NEW);
         if (! newEntities.isEmpty()) {
             List<OrderItemDO> itemDOs = newEntities.stream().map(item -> new OrderItemDO(orderAggregate.getRoot().getId(), item)).collect(Collectors.toList());
             orderItemMapper.insertAll(itemDOs);
@@ -113,7 +113,7 @@ public class OrderRepository {
     }
 
     private void updateOrderItems(Aggregate<SalesOrder> orderAggregate) {
-        Collection<OrderItem> updatedEntities = orderAggregate.findChangedEntities(SalesOrder::getItems, OrderItem::getId);
+        Collection<OrderItem> updatedEntities = orderAggregate.findCollectionDelta(SalesOrder::getItems, OrderItem::getId).get(Aggregate.DeltaType.UPDATED);
         updatedEntities.stream().forEach(item -> {
             if (orderItemMapper.updateByPrimaryKey(new OrderItemDO(orderAggregate.getRoot().getId(), item)) != 1) {
                 throw new OptimisticLockException(String.format("Update order item (%d) error, it's not found", item.getId()));
@@ -122,7 +122,7 @@ public class OrderRepository {
     }
 
     private void removeOrderItems(Aggregate<SalesOrder> orderAggregate) {
-        Collection<OrderItem> removedEntities = orderAggregate.findRemovedEntities(SalesOrder::getItems, OrderItem::getId);
+        Collection<OrderItem> removedEntities = orderAggregate.findCollectionDelta(SalesOrder::getItems, OrderItem::getId).get(Aggregate.DeltaType.REMOVED);
         removedEntities.stream().forEach(item -> {
             if (orderItemMapper.deleteByPrimaryKey(item.getId()) != 1) {
                 throw new OptimisticLockException(String.format("Delete order item (%d) error, it's not found", item.getId()));

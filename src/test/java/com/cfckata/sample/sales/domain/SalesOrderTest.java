@@ -8,10 +8,9 @@ import java.math.BigDecimal;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class SalesOrderTest {
-
+class SalesOrderTest {
     @Test
-    public void should_be_PAID_when_checkout() {
+    void should_be_PAID_when_checkout() {
         SalesOrder order = new SalesOrder();
         order.setStatus(OrderStatus.NEW);
 
@@ -21,7 +20,7 @@ public class SalesOrderTest {
     }
 
     @Test
-    public void should_failed_when_pay_a_not_new_order() {
+    void should_failed_when_pay_a_not_new_order() {
         SalesOrder order = new SalesOrder();
         order.setStatus(OrderStatus.PAID);
         Payment payment = new Payment(PaymentType.CASH, new BigDecimal("10.00"));
