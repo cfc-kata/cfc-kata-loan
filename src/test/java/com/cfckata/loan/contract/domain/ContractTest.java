@@ -1,6 +1,5 @@
 package com.cfckata.loan.contract.domain;
 
-import com.cfckata.loan.customer.LoanCustomer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

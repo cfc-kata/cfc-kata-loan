@@ -1,6 +1,6 @@
 package com.cfckata.loan.contract.request;
 
-import com.cfckata.loan.customer.LoanCustomer;
+import com.cfckata.loan.contract.domain.LoanCustomer;
 
 import java.math.BigDecimal;
 

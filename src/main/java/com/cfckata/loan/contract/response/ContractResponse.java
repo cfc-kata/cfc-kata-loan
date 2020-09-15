@@ -1,7 +1,7 @@
 package com.cfckata.loan.contract.response;
 
 import com.cfckata.loan.contract.domain.Contract;
-import com.cfckata.loan.customer.LoanCustomer;
+import com.cfckata.loan.contract.domain.LoanCustomer;
 
 import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;

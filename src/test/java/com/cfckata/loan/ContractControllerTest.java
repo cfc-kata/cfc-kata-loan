@@ -5,7 +5,7 @@ import com.cfckata.exception.ErrorResponse;
 import com.cfckata.loan.contract.request.CreateContractRequest;
 import com.cfckata.loan.contract.response.ContractResponse;
 import com.cfckata.loan.contract.response.CreateContractResponse;
-import com.cfckata.loan.customer.LoanCustomer;
+import com.cfckata.loan.contract.domain.LoanCustomer;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

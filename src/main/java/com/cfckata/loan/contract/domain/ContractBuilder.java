@@ -1,6 +1,5 @@
 package com.cfckata.loan.contract.domain;
 
-import com.cfckata.loan.customer.LoanCustomer;
 import com.github.meixuesong.aggregatepersistence.Versionable;
 
 import java.math.BigDecimal;

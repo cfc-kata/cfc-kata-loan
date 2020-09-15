@@ -6,7 +6,7 @@ import com.cfckata.loan.contract.domain.Contract;
 import com.cfckata.loan.contract.domain.ContractBuilder;
 import com.cfckata.loan.contract.domain.ContractStatus;
 import com.cfckata.loan.contract.domain.RepaymentType;
-import com.cfckata.loan.customer.LoanCustomer;
+import com.cfckata.loan.contract.domain.LoanCustomer;
 import com.github.meixuesong.aggregatepersistence.Aggregate;
 import com.github.meixuesong.aggregatepersistence.AggregateFactory;
 import org.junit.jupiter.api.Test;

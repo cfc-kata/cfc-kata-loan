@@ -1,10 +1,8 @@
 package com.cfckata.loan.loan.domain;
 
-import com.cfckata.exception.BusinessException;
 import com.cfckata.loan.contract.domain.RepaymentType;
 import com.github.meixuesong.aggregatepersistence.Versionable;
 
-import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -41,7 +39,7 @@ public class Loan implements Versionable, Serializable {
         if (this.repaymentType == RepaymentType.DEBX) {
             calculator = new AverageCapitalPlusInterestCalculator();
         } else {
-            throw new BusinessException("100001", "当前只支持等额本息");
+            throw new IllegalArgumentException("当前只支持等额本息");
         }
 
         this.version = version;

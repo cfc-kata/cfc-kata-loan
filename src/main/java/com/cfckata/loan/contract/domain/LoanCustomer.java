@@ -1,4 +1,4 @@
-package com.cfckata.loan.customer;
+package com.cfckata.loan.contract.domain;
 
 import java.io.Serializable;
 
