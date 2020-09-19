@@ -3,7 +3,6 @@ package com.cfckata.sample.sales;
 import com.cfckata.common.ApiTest;
 import com.cfckata.exception.ErrorResponse;
 import com.cfckata.sample.sales.domain.OrderStatus;
-import com.cfckata.sample.sales.domain.SalesOrder;
 import com.cfckata.sample.sales.request.ChangeOrderRequest;
 import com.cfckata.sample.sales.request.CheckoutRequest;
 import com.cfckata.sample.sales.request.CreateOrderRequest;
