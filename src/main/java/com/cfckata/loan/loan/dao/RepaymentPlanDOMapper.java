@@ -1,9 +1,11 @@
 package com.cfckata.loan.loan.dao;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper
 @Repository
@@ -20,9 +22,9 @@ public interface RepaymentPlanDOMapper {
 
     RepaymentPlanDO selectByPrimaryKey(RepaymentPlanDOKey key);
 
-    int updateByPrimaryKeySelective(RepaymentPlanDO record);
+    int updateByPrimaryKeySelective(@Param("repaymentPlanDO") RepaymentPlanDO record, @Param("changedFields") Set<String> changedFields);
 
-    int updateByPrimaryKey(RepaymentPlanDO record);
+    int updateByPrimaryKey(@Param("repaymentPlanDO") RepaymentPlanDO record, @Param("changedFields") Set<String> changedFields);
 
     List<RepaymentPlanDO> selectByLoanId(String loanId);
 }

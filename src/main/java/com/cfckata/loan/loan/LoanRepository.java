@@ -17,6 +17,7 @@ import javax.persistence.OptimisticLockException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
@@ -59,11 +60,23 @@ public class LoanRepository {
 
     private void updateRepaymentPlans(Aggregate<Loan> aggregate, Collection<RepaymentPlan> repaymentPlans) {
         repaymentPlans.stream().forEach(item -> {
-            if (planMapper.updateByPrimaryKey(new RepaymentPlanDO(aggregate.getRoot().getId(), item)) != 1) {
+            RepaymentPlanDO newRepaymentPlanDO = new RepaymentPlanDO(aggregate.getRoot().getId(), item);
+            RepaymentPlanDO oldDo = new RepaymentPlanDO(aggregate.getRoot().getId(), findOldRepaymentPlan(aggregate, item.getNo()));
+            Set<String> changedFields = DataObjectUtils.getChangedFields(oldDo, newRepaymentPlanDO);
+            if (planMapper.updateByPrimaryKeySelective(newRepaymentPlanDO, changedFields) != 1) {
                 throw new OptimisticLockException(
                         String.format("Update repayment_plan (loan_id=%s, plan_no=%d) error, it's not found or changed by another user", aggregate.getRoot().getId(), item.getNo()));
             }
         });
+    }
+
+    private RepaymentPlan findOldRepaymentPlan(Aggregate<Loan> aggregate, Integer planNo) {
+        for (RepaymentPlan repaymentPlan : aggregate.getRootSnapshot().getRepaymentPlans()) {
+            if (repaymentPlan.getNo().equals(planNo)) {
+                return repaymentPlan;
+            }
+        }
+        return null;
     }
 
     private void removeRepaymentPlans(Aggregate<Loan> aggregate, Collection<RepaymentPlan> removedEntities) {

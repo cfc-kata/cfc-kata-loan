@@ -108,36 +108,39 @@
     </foreach>
   </insert>
 
-  <update id="updateByPrimaryKeySelective" parameterType="com.cfckata.loan.loan.dao.RepaymentPlanDO">
+  <update id="updateByPrimaryKeySelective">
     update repayment_plan
     <set>
-      <if test="payableDate != null">
-        payable_date = #{payableDate,jdbcType=TIMESTAMP},
+      <if test="'payableDate' in changedFields">
+        payable_date = #{repaymentPlanDO.payableDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="payableAmount != null">
-        payable_amount = #{payableAmount,jdbcType=DECIMAL},
+      <if test="'payableAmount' in changedFields">
+        payable_amount = #{repaymentPlanDO.payableAmount,jdbcType=DECIMAL},
       </if>
-      <if test="payableInterest != null">
-        payable_interest = #{payableInterest,jdbcType=DECIMAL},
+      <if test="'payableInterest' in changedFields">
+        payable_interest = #{repaymentPlanDO.payableInterest,jdbcType=DECIMAL},
       </if>
-      <if test="payableCapital != null">
-        payable_capital = #{payableCapital,jdbcType=DECIMAL},
+      <if test="'payableCapital' in changedFields">
+        payable_capital = #{repaymentPlanDO.payableCapital,jdbcType=DECIMAL},
       </if>
-      <if test="status != null">
-        status = #{status,jdbcType=VARCHAR},
+      <if test="('status' in changedFields)">
+        status = #{repaymentPlanDO.status,jdbcType=VARCHAR},
       </if>
     </set>
-    where loan_id = #{loanId,jdbcType=VARCHAR}
-      and plan_no = #{planNo,jdbcType=INTEGER}
+    where loan_id = #{repaymentPlanDO.loanId,jdbcType=VARCHAR}
+      and plan_no = #{repaymentPlanDO.planNo,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cfckata.loan.loan.dao.RepaymentPlanDO">
+  <update id="updateByPrimaryKey">
     update repayment_plan
-    set payable_date = #{payableDate,jdbcType=TIMESTAMP},
-      payable_amount = #{payableAmount,jdbcType=DECIMAL},
-      payable_interest = #{payableInterest,jdbcType=DECIMAL},
-      payable_capital = #{payableCapital,jdbcType=DECIMAL},
-      status = #{status,jdbcType=VARCHAR}
-    where loan_id = #{loanId,jdbcType=VARCHAR}
-      and plan_no = #{planNo,jdbcType=INTEGER}
+    <set> payable_date = #{repaymentPlanDO.payableDate,jdbcType=TIMESTAMP},
+      payable_amount = #{repaymentPlanDO.payableAmount,jdbcType=DECIMAL},
+      payable_interest = #{repaymentPlanDO.payableInterest,jdbcType=DECIMAL},
+      payable_capital = #{repaymentPlanDO.payableCapital,jdbcType=DECIMAL}
+      <if test="'status' in changedFields">
+        , status = #{repaymentPlanDO.status,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where loan_id = #{repaymentPlanDO.loanId,jdbcType=VARCHAR}
+      and plan_no = #{repaymentPlanDO.planNo,jdbcType=INTEGER}
   </update>
 </mapper>
